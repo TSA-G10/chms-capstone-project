@@ -203,6 +203,14 @@ git push origin feature/devops-repo-setup
 # Open Pull Request: feature/devops-repo-setup → team-06-devops-qa
 ```
 
+**After QA Lead approves and merges into the team branch:**
+
+```bash
+git checkout team-06-devops-qa
+git pull origin team-06-devops-qa
+git branch -d feature/devops-repo-setup
+```
+
 ---
 
 ### T-DV-005 — Express App Shell (DevOps Dev 2)
@@ -345,12 +353,12 @@ git push origin feature/devops-express-app
 # Open Pull Request: feature/devops-express-app → team-06-devops-qa
 ```
 
-**After every PR is approved and merged:**
+**After QA Lead approves and merges into the team branch:**
 
 ```bash
 git checkout team-06-devops-qa
 git pull origin team-06-devops-qa
-git branch -d feature/devops-repo-setup    # replace with your branch name
+git branch -d feature/devops-express-app
 ```
 
 ---
@@ -720,6 +728,14 @@ git add postman/
 git commit -m "test(qa): add Postman collection with all Phase 2 endpoints and env setup"
 git push origin feature/qa-postman-collection
 # Open Pull Request: feature/qa-postman-collection → team-06-devops-qa
+```
+
+**After QA Lead approves and merges into the team branch:**
+
+```bash
+git checkout team-06-devops-qa
+git pull origin team-06-devops-qa
+git branch -d feature/qa-postman-collection
 ```
 
 ---
