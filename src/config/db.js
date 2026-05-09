@@ -1,3 +1,5 @@
+// src/config/db.js
+
 const mongoose = require("mongoose");
 const PORT = process.env.PORT || 5000;
 
