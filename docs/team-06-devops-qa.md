@@ -326,6 +326,25 @@ const startServer = async () => {
 startServer();
 ```
 
+Create `src/config/db.js`;
+
+```js
+const mongoose = require("mongoose");
+const PORT = process.env.PORT || 5000;
+
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log(`MongoDB connected on port ${PORT}`);
+  } catch (error) {
+    console.error(error.message);
+    process.exit(1);
+  }
+};
+
+module.exports = connectDB;
+```
+
 **Verify the app boots:**
 
 ```bash
@@ -347,7 +366,7 @@ curl http://localhost:5000/health
 **Git commands:**
 
 ```bash
-git add src/app.js src/server.js
+git add src/app.js src/server.js src/config/db.js
 git commit -m "feat(devops): add Express app shell with middleware, health check, global error handler"
 git push origin feature/devops-express-app
 # Open Pull Request: feature/devops-express-app → team-06-devops-qa
