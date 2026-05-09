@@ -28,7 +28,7 @@ You will need:
 Run this once on your local machine. Everyone clones the same URL.
 
 ```bash
-`Go to your selected project directory and run; no need to `git init` as `git clone` will do that for you:`
+// Go to your selected project directory and run; no need to git init as git clone will do that for you:
 
 git clone https://github.com/TSA-G10/chms-capstone-project
 cd chms-capstone-project
@@ -81,6 +81,7 @@ Each developer checks out **only their own team branch**. Find your team below a
 
 ```bash
 git checkout team-01-db-models
+git pull origin team-01-db-models
 ```
 
 ---
@@ -91,6 +92,7 @@ git checkout team-01-db-models
 
 ```bash
 git checkout team-02-auth-rbac
+git pull origin team-02-auth-rbac
 ```
 
 ---
@@ -101,6 +103,7 @@ git checkout team-02-auth-rbac
 
 ```bash
 git checkout team-03-membership-org
+git pull origin team-03-membership-org
 ```
 
 ---
@@ -111,6 +114,7 @@ git checkout team-03-membership-org
 
 ```bash
 git checkout team-04-finance-events
+git pull origin team-04-finance-events
 ```
 
 ---
@@ -121,6 +125,7 @@ git checkout team-04-finance-events
 
 ```bash
 git checkout team-05-programs-welfare-media
+git pull origin team-05-programs-welfare-media
 ```
 
 ---
@@ -131,6 +136,7 @@ git checkout team-05-programs-welfare-media
 
 ```bash
 git checkout team-06-devops-qa
+git pull origin team-06-devops-qa
 ```
 
 ---
