@@ -485,6 +485,14 @@ git push origin feature/inventory-vendors
 # Open Pull Request: feature/inventory-vendors → team-05-programs-welfare-media
 ```
 
+**After API Lead C approves and merges into the team branch:**
+
+```bash
+git checkout team-05-programs-welfare-media
+git pull origin team-05-programs-welfare-media
+git branch -d feature/inventory-vendors
+```
+
 ---
 
 ## WELFARE (Days 7–10) — API Dev C2
@@ -741,12 +749,18 @@ git push origin feature/welfare-cases
 # Open Pull Request: feature/welfare-cases → team-05-programs-welfare-media
 ```
 
-**After every Phase 2 PR is approved and merged:**
+**After API Lead C approves and merges into the team branch:**
 
 ```bash
+# API Dev C1, C3
 git checkout team-05-programs-welfare-media
 git pull origin team-05-programs-welfare-media
-git branch -d feature/inventory-vendors   # replace with your branch name
+git branch -d feature/inventory-vendors
+
+# API Dev C2
+git checkout team-05-programs-welfare-media
+git pull origin team-05-programs-welfare-media
+git branch -d feature/welfare-cases
 ```
 
 ---
@@ -1166,6 +1180,20 @@ git push origin feature/programs-enrollment
 # Open Pull Request: feature/programs-enrollment → team-05-programs-welfare-media
 ```
 
+**After API Lead C approves and merges into the team branch:**
+
+```bash
+# API Dev C3
+git checkout team-05-programs-welfare-media
+git pull origin team-05-programs-welfare-media
+git branch -d feature/programs-crud
+
+# API Dev C1, C2
+git checkout team-05-programs-welfare-media
+git pull origin team-05-programs-welfare-media
+git branch -d feature/programs-enrollment
+```
+
 ---
 
 ### T-MC-010 — CRUD /media (API Dev C1)
@@ -1440,12 +1468,28 @@ git push origin feature/media-upload
 # Open Pull Request: feature/media-upload → team-05-programs-welfare-media
 ```
 
-**After every Phase 3 PR is approved and merged:**
+**After API Lead C approves and merges into the team branch:**
 
 ```bash
+# API Dev C3
 git checkout team-05-programs-welfare-media
 git pull origin team-05-programs-welfare-media
-git branch -d feature/programs-crud   # replace with your branch name
+git branch -d feature/programs-crud
+
+# API Dev C1, C2
+git checkout team-05-programs-welfare-media
+git pull origin team-05-programs-welfare-media
+git branch -d feature/programs-enrollment
+
+# API Dev C1
+git checkout team-05-programs-welfare-media
+git pull origin team-05-programs-welfare-media
+git branch -d feature/media-catalog
+
+# API Dev C2
+git checkout team-05-programs-welfare-media
+git pull origin team-05-programs-welfare-media
+git branch -d feature/media-upload
 ```
 
 ---
@@ -1487,7 +1531,15 @@ git push origin fix/pwm-[description]
 git add .
 git commit -m "fix(pwm): [describe the fix]"
 git push origin fix/pwm-[description]
-# Open Pull Request → team-05-programs-welfare-media
+# Open Pull Request: fix/pwm-[description] → team-05-programs-welfare-media
+```
+
+**After API Lead C approves and merges into the team branch:**
+
+```bash
+git checkout team-05-programs-welfare-media
+git pull origin team-05-programs-welfare-media
+git branch -d fix/pwm-[description]
 ```
 
 **End-to-end Cloudinary verification checklist:**
