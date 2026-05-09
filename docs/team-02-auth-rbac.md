@@ -108,6 +108,14 @@ git push origin feature/auth-jwt-utilities
 # Request review from Auth Lead
 ```
 
+**After Auth Lead approves and merges into the team branch:**
+
+```bash
+git checkout team-02-auth-rbac
+git pull origin team-02-auth-rbac
+git branch -d feature/auth-jwt-utilities
+```
+
 ---
 
 ### T-AU-002 — authenticate Middleware (Auth Dev 2)
@@ -202,6 +210,17 @@ git add src/middlewares/authorizeRoles.js
 git commit -m "feat(auth): add authorizeRoles RBAC middleware"
 git push origin feature/auth-endpoints
 # (Auth Dev 3 continues building auth endpoints on this branch)
+```
+
+**After Auth Lead approves and merges into the team branch:**
+
+```bash
+# Auth Dev 2
+git checkout team-02-auth-rbac
+git pull origin team-02-auth-rbac
+git branch -d feature/auth-middleware
+
+# Auth Dev 3 — do NOT delete feature/auth-endpoints yet; you continue on it for T-AU-004, T-AU-005, T-AU-006
 ```
 
 ---
@@ -345,13 +364,11 @@ const register = async (req, res) => {
         .json({ success: false, error: error.details[0].message });
 
     const user = await authService.register(req.body);
-    return res
-      .status(201)
-      .json({
-        success: true,
-        data: user,
-        message: "User created successfully.",
-      });
+    return res.status(201).json({
+      success: true,
+      data: user,
+      message: "User created successfully.",
+    });
   } catch (err) {
     return res.status(400).json({ success: false, error: err.message });
   }
@@ -500,12 +517,20 @@ git push origin feature/auth-endpoints
 ### STEP 2 — After Your PR is Approved and Merged
 
 ```bash
-# Switch back to the team branch and pull the merged changes
+# Auth Dev 1
 git checkout team-02-auth-rbac
 git pull origin team-02-auth-rbac
+git branch -d feature/auth-jwt-utilities
 
-# Delete your local feature branch
-git branch -d feature/auth-jwt-utilities   # replace with your branch name
+# Auth Dev 2
+git checkout team-02-auth-rbac
+git pull origin team-02-auth-rbac
+git branch -d feature/auth-middleware
+
+# Auth Dev 3
+git checkout team-02-auth-rbac
+git pull origin team-02-auth-rbac
+git branch -d feature/auth-endpoints
 ```
 
 ---
@@ -587,6 +612,14 @@ git commit -m "fix(auth): [describe the fix]"
 git push origin fix/auth-middleware-[description]
 # Open PR: fix/auth-middleware-[description] → team-02-auth-rbac
 # Tag Auth Lead for review
+```
+
+**After Auth Lead approves and merges into the team branch:**
+
+```bash
+git checkout team-02-auth-rbac
+git pull origin team-02-auth-rbac
+git branch -d fix/auth-middleware-[description]
 ```
 
 Once Auth Lead merges the fix into `team-02-auth-rbac`, Auth Lead opens a PR to `develop`.
@@ -738,12 +771,10 @@ const uploadDocument = async (req, res) => {
         .json({ success: false, error: "No file uploaded." });
     const { entityType, entityId } = req.body;
     if (!entityType || !entityId) {
-      return res
-        .status(400)
-        .json({
-          success: false,
-          error: "entityType and entityId are required.",
-        });
+      return res.status(400).json({
+        success: false,
+        error: "entityType and entityId are required.",
+      });
     }
 
     const doc = await documentService.uploadDocument(

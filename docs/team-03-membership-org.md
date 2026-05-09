@@ -381,6 +381,14 @@ git push origin feature/membership-member-crud
 # Open Pull Request: feature/membership-member-crud → team-03-membership-org
 ```
 
+**After API Lead A approves and merges into the team branch:**
+
+```bash
+git checkout team-03-membership-org
+git pull origin team-03-membership-org
+git branch -d feature/membership-member-crud
+```
+
 ---
 
 ## ORG UNITS (Days 4–6) — API Dev A1, A2
@@ -615,6 +623,14 @@ git push origin feature/membership-org-units
 # Open Pull Request: feature/membership-org-units → team-03-membership-org
 ```
 
+**After API Lead A approves and merges into the team branch:**
+
+```bash
+git checkout team-03-membership-org
+git pull origin team-03-membership-org
+git branch -d feature/membership-org-units
+```
+
 ---
 
 ## FELLOWSHIPS (Days 4–6) — API Dev A3
@@ -840,6 +856,14 @@ git push origin feature/membership-fellowships
 # Open Pull Request: feature/membership-fellowships → team-03-membership-org
 ```
 
+**After API Lead A approves and merges into the team branch:**
+
+```bash
+git checkout team-03-membership-org
+git pull origin team-03-membership-org
+git branch -d feature/membership-fellowships
+```
+
 ---
 
 ## STAFF (Days 7–9) — API Dev A1
@@ -1038,13 +1062,20 @@ git push origin feature/membership-staff
 # Open Pull Request: feature/membership-staff → team-03-membership-org
 ```
 
-**After every PR is approved and merged:**
+**After API Lead A approves and merges into the team branch:**
 
 ```bash
 git checkout team-03-membership-org
 git pull origin team-03-membership-org
-git branch -d feature/membership-member-crud   # replace with your branch name
+git branch -d feature/membership-staff
 ```
+
+> Each developer runs the cleanup block for their own branch once their PR is merged. Reference:
+>
+> - API Dev A1, A3, A4 → `git branch -d feature/membership-member-crud`
+> - API Dev A2 → `git branch -d feature/membership-org-units`
+> - API Dev A3 → `git branch -d feature/membership-fellowships`
+> - API Dev A1 → `git branch -d feature/membership-staff`
 
 ---
 
@@ -1259,6 +1290,14 @@ git add src/services/announcement.service.js \
 git commit -m "feat(announcements): add Announcement CRUD with publishedAt filter and audience targeting"
 git push origin feature/membership-announcements
 # Open Pull Request: feature/membership-announcements → team-03-membership-org
+```
+
+**After API Lead A approves and merges into the team branch:**
+
+```bash
+git checkout team-03-membership-org
+git pull origin team-03-membership-org
+git branch -d feature/membership-announcements
 ```
 
 ---
@@ -1506,12 +1545,18 @@ git push origin feature/membership-missions
 # Open Pull Request: feature/membership-missions → team-03-membership-org
 ```
 
-**After every Phase 3 PR is approved and merged:**
+**After API Lead A approves and merges into the team branch:**
 
 ```bash
+# API Dev A2
 git checkout team-03-membership-org
 git pull origin team-03-membership-org
-git branch -d feature/membership-announcements   # replace with your branch name
+git branch -d feature/membership-announcements
+
+# API Dev A3, A4
+git checkout team-03-membership-org
+git pull origin team-03-membership-org
+git branch -d feature/membership-missions
 ```
 
 ---
@@ -1540,6 +1585,14 @@ git add .
 git commit -m "fix(membership): [describe the fix]"
 git push origin fix/membership-[description]
 # Open Pull Request: fix/membership-[description] → team-03-membership-org
+```
+
+**After API Lead A approves and merges into the team branch:**
+
+```bash
+git checkout team-03-membership-org
+git pull origin team-03-membership-org
+git branch -d fix/membership-[description]
 ```
 
 **After all fix PRs are merged, API Lead A opens the final PR: `team-03-membership-org` → `develop`.**
