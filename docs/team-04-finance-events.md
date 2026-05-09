@@ -484,6 +484,20 @@ git push origin feature/finance-expenses
 # Open Pull Request: feature/finance-expenses → team-04-finance-events
 ```
 
+**After API Lead B approves and merges into the team branch:**
+
+```bash
+# API Dev B1, B2
+git checkout team-04-finance-events
+git pull origin team-04-finance-events
+git branch -d feature/finance-contributions
+
+# API Dev B3, B4
+git checkout team-04-finance-events
+git pull origin team-04-finance-events
+git branch -d feature/finance-expenses
+```
+
 ---
 
 ## EVENTS (Days 7–9) — API Dev B2, B3
@@ -879,12 +893,18 @@ git push origin feature/events-attendance
 # Open Pull Request: feature/events-attendance → team-04-finance-events
 ```
 
-**After every PR is approved and merged:**
+**After API Lead B approves and merges into the team branch:**
 
 ```bash
+# API Dev B2, B3
 git checkout team-04-finance-events
 git pull origin team-04-finance-events
-git branch -d feature/finance-contributions   # replace with your branch name
+git branch -d feature/events-crud
+
+# API Dev B4
+git checkout team-04-finance-events
+git pull origin team-04-finance-events
+git branch -d feature/events-attendance
 ```
 
 ---
@@ -1174,12 +1194,23 @@ git push origin feature/reports-programs
 # Open Pull Request: feature/reports-programs → team-04-finance-events
 ```
 
-**After every PR is approved and merged:**
+**After API Lead B approves and merges into the team branch:**
 
 ```bash
+# API Dev B2
 git checkout team-04-finance-events
 git pull origin team-04-finance-events
-git branch -d feature/reports-attendance   # replace with your branch name
+git branch -d feature/reports-attendance
+
+# API Dev B3
+git checkout team-04-finance-events
+git pull origin team-04-finance-events
+git branch -d feature/reports-finance
+
+# API Dev B4
+git checkout team-04-finance-events
+git pull origin team-04-finance-events
+git branch -d feature/reports-programs
 ```
 
 ---
@@ -1209,6 +1240,14 @@ git add .
 git commit -m "fix(finance): [describe the fix]"
 git push origin fix/finance-[description]
 # Open Pull Request: fix/finance-[description] → team-04-finance-events
+```
+
+**After API Lead B approves and merges into the team branch:**
+
+```bash
+git checkout team-04-finance-events
+git pull origin team-04-finance-events
+git branch -d fix/finance-[description]
 ```
 
 **Finance summary optimization check — run this if summary is slow:**
