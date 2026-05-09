@@ -73,7 +73,7 @@ git branch -r
 
 ## Step 3 — Check Out Your Team Branch
 
-Each developer checks out **only their own team branch**. Find your team below and run the corresponding command.
+Each developer must check out **only their own team branch**. Find your team below and run the corresponding command.
 
 ### Team 01 — Database & Models
 
