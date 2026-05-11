@@ -438,6 +438,8 @@ module.exports = { register, login, refresh, logout, changePassword };
 
 ### T-AU-005 & T-AU-006 — Auth Routes with Rate Limiting (Auth Dev 3)
 
+// We are here
+
 **Branch:** `feature/auth-endpoints`
 
 Install rate limiter (coordinate with Team 6 — may already be in package.json):
