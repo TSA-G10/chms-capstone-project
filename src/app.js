@@ -29,7 +29,7 @@ app.get("/health", (req, res) => {
 // const announcementRoutes = require('./routes/announcement.routes');
 // const missionRoutes      = require('./routes/mission.routes');
 const financeRoutes = require("./routes/finance.routes");
-// const eventRoutes        = require('./routes/event.routes');
+const eventRoutes = require("./routes/event.routes");
 // const reportRoutes       = require('./routes/report.routes');
 // const inventoryRoutes    = require('./routes/inventory.routes');
 // const vendorRoutes       = require('./routes/vendor.routes');
@@ -47,7 +47,7 @@ const financeRoutes = require("./routes/finance.routes");
 // app.use('/api/v1/announcements', announcementRoutes);
 // app.use('/api/v1/missions',      missionRoutes);
 app.use("/api/v1/finance", financeRoutes);
-// app.use('/api/v1/events',        eventRoutes);
+app.use("/api/v1/events", eventRoutes);
 // app.use('/api/v1/reports',       reportRoutes);
 // app.use('/api/v1/inventory',     inventoryRoutes);
 // app.use('/api/v1/vendors',       vendorRoutes);
