@@ -36,7 +36,7 @@ const authRoutes = require('./routes/auth.routes');
 // const welfareRoutes      = require('./routes/welfare.routes');
 // const programRoutes      = require('./routes/program.routes');
 // const mediaRoutes        = require('./routes/media.routes');
-// const documentRoutes     = require('./routes/document.routes');
+const documentRoutes     = require('./routes/document.routes');
 // const auditRoutes        = require('./routes/audit.routes');
 
 app.use('/api/v1/auth', authRoutes);
@@ -54,7 +54,7 @@ app.use('/api/v1/auth', authRoutes);
 // app.use('/api/v1/welfare',       welfareRoutes);
 // app.use('/api/v1/programs',      programRoutes);
 // app.use('/api/v1/media',         mediaRoutes);
-// app.use('/api/v1/documents',     documentRoutes);
+app.use('/api/v1/documents',     documentRoutes);
 // app.use('/api/v1/audit',         auditRoutes);
 
 // ─── 404 Handler ─────────────────────────────────────────────────────────────
