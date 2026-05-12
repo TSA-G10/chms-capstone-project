@@ -478,8 +478,9 @@ git push origin feature/finance-contributions
 
 # API Dev B3, B4 — expenses branch
 git add src/services/expense.service.js \
-        src/controllers/expense.controller.js
-git commit -m "feat(finance): add expenses POST/GET with optional Cloudinary receipt upload"
+        src/controllers/expense.controller.js \
+        src/app.js
+git commit -m "feat(finance): add expenses POST/GET with optional Cloudinary receipt upload; mount in app.js"
 git push origin feature/finance-expenses
 # Open Pull Request: feature/finance-expenses → team-04-finance-events
 ```
