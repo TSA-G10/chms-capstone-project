@@ -1,6 +1,4 @@
-//Create `src/utils/uploadToCloud.js`:
 
-//```js
 const cloudinary = require("../config/cloudinary");
 const streamifier = require("streamifier");
 
