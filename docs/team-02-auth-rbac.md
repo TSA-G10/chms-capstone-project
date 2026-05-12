@@ -505,8 +505,8 @@ git push origin feature/auth-jwt-utilities
 # Request review from Auth Lead
 
 # Auth Dev 3
-git add src/routes/auth.routes.js
-git commit -m "feat(auth): add auth routes with rate limiting on /login"
+git add src/routes/auth.routes.js src/app.js
+git commit -m "feat(auth): add auth routes with rate limiting on /login and mount in app.js"
 git push origin feature/auth-endpoints
 # Open Pull Request: feature/auth-endpoints → team-02-auth-rbac
 # Request review from Auth Lead
