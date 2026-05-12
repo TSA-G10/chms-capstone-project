@@ -479,8 +479,9 @@ git add src/services/inventory.service.js \
         src/routes/inventory.routes.js \
         src/services/vendor.service.js \
         src/controllers/vendor.controller.js \
-        src/routes/vendor.routes.js
-git commit -m "feat(inventory-vendors): add Inventory CRUD with expense linkage and Vendor CRUD"
+        src/routes/vendor.routes.js \
+        src/app.js
+git commit -m "feat(inventory-vendors): add Inventory CRUD with expense linkage and Vendor CRUD; mount routes in app.js"
 git push origin feature/inventory-vendors
 # Open Pull Request: feature/inventory-vendors → team-05-programs-welfare-media
 ```
