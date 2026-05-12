@@ -21,7 +21,7 @@ app.get("/health", (req, res) => {
 // Routes are mounted here as each team delivers their route files.
 // Uncomment each line when the corresponding team's PR is merged to develop.
 
-const authRoutes = require('./routes/auth.routes');
+const authRoutes = require("./routes/auth.routes");
 // const memberRoutes       = require('./routes/member.routes');
 // const orgUnitRoutes      = require('./routes/orgUnit.routes');
 // const fellowshipRoutes   = require('./routes/fellowship.routes');
@@ -37,9 +37,9 @@ const authRoutes = require('./routes/auth.routes');
 // const programRoutes      = require('./routes/program.routes');
 // const mediaRoutes        = require('./routes/media.routes');
 // const documentRoutes     = require('./routes/document.routes');
-// const auditRoutes        = require('./routes/audit.routes');
+const auditRoutes = require("./routes/audit.routes");
 
-app.use('/api/v1/auth', authRoutes);
+app.use("/api/v1/auth", authRoutes);
 // app.use('/api/v1/members',       memberRoutes);
 // app.use('/api/v1/org-units',     orgUnitRoutes);
 // app.use('/api/v1/fellowships',   fellowshipRoutes);
@@ -55,7 +55,7 @@ app.use('/api/v1/auth', authRoutes);
 // app.use('/api/v1/programs',      programRoutes);
 // app.use('/api/v1/media',         mediaRoutes);
 // app.use('/api/v1/documents',     documentRoutes);
-// app.use('/api/v1/audit',         auditRoutes);
+app.use("/api/v1/audit", auditRoutes);
 
 // ─── 404 Handler ─────────────────────────────────────────────────────────────
 app.use((req, res) => {
