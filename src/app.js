@@ -33,7 +33,7 @@ app.get("/health", (req, res) => {
 // const reportRoutes       = require('./routes/report.routes');
 const inventoryRoutes = require("./routes/inventory.routes");
 const vendorRoutes = require("./routes/vendor.routes");
-// const welfareRoutes      = require('./routes/welfare.routes');
+const welfareRoutes = require("./routes/welfare.routes");
 // const programRoutes      = require('./routes/program.routes');
 // const mediaRoutes        = require('./routes/media.routes');
 // const documentRoutes     = require('./routes/document.routes');
@@ -51,7 +51,7 @@ const vendorRoutes = require("./routes/vendor.routes");
 // app.use('/api/v1/reports',       reportRoutes);
 app.use("/api/v1/inventory", inventoryRoutes);
 app.use("/api/v1/vendors", vendorRoutes);
-// app.use('/api/v1/welfare',       welfareRoutes);
+app.use("/api/v1/welfare", welfareRoutes);
 // app.use('/api/v1/programs',      programRoutes);
 // app.use('/api/v1/media',         mediaRoutes);
 // app.use('/api/v1/documents',     documentRoutes);
