@@ -91,3 +91,42 @@ const getFinanceReport = async ({ period = "monthly" }) => {
     net: row.totalIncome - row.totalExpenses,
   }));
 };
+
+// Programs Report Service
+const getProgramsReport = async () => {
+  const programs = await Program.find({ isActive: true }).select(
+    "title type maxParticipants",
+  );
+
+  const results = await Promise.all(
+    programs.map(async (program) => {
+      const total = await ProgramEnrollment.countDocuments({
+        programId: program._id,
+      });
+      const completed = await ProgramEnrollment.countDocuments({
+        programId: program._id,
+        status: "completed",
+      });
+      const completionRate =
+        total > 0 ? Math.round((completed / total) * 100) : 0;
+
+      return {
+        programId: program._id,
+        title: program.title,
+        type: program.type,
+        maxParticipants: program.maxParticipants || null,
+        totalEnrolled: total,
+        totalCompleted: completed,
+        completionRate: `${completionRate}%`,
+      };
+    }),
+  );
+
+  return results;
+};
+
+module.exports = {
+  getAttendanceReport,
+  getFinanceReport,
+  getProgramsReport,
+};
