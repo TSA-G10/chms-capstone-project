@@ -42,10 +42,32 @@ const deleteProgram = async (id) => {
   if (!program) throw new Error("Program not found.");
 };
 
+
+const addSession = async (programId, sessionData) => {
+  const program = await Program.findOne({ _id: programId, isActive: true });
+  if (!program) throw new Error("Program not found.");
+
+  // Validate sessionNumber is unique within this program
+  const duplicate = program.sessions.find(
+    (s) => s.sessionNumber === sessionData.sessionNumber,
+  );
+  if (duplicate) {
+    throw new Error(
+      `Session number ${sessionData.sessionNumber} already exists in this program.`,
+    );
+  }
+
+  program.sessions.push(sessionData);
+  await program.save();
+  return program;
+};
+
+// Add to exports
 module.exports = {
   getAllPrograms,
   getProgramById,
   createProgram,
   updateProgram,
   deleteProgram,
+  addSession,
 };
