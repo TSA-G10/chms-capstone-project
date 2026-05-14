@@ -47,10 +47,21 @@ const deleteProgram = async (req, res) => {
   }
 };
 
+const addSession = async (req, res) => {
+  try {
+    const program = await programService.addSession(req.params.id, req.body);
+    return res.status(200).json({ success: true, data: program });
+  } catch (err) {
+    return res.status(400).json({ success: false, error: err.message });
+  }
+};
+
+// Add to exports
 module.exports = {
   getPrograms,
   getProgram,
   createProgram,
   updateProgram,
   deleteProgram,
+  addSession,
 };
