@@ -282,4 +282,17 @@ git push origin feature/devops-repo-setup
 
 ---
 
+## Importing Postman Collection and Environment
+
+After pulling the latest update form `develop` into your team's branch, you will find the `postman` folder with 2 JSON files.
+
+1. Open Postman → click Import
+2. Drag and drop both files `at the same time`
+3. Postman imports the collection and the environment in one go
+4. Select ChMS Local from the environment dropdown (top right corner)
+5. Run POST Login first — ACCESS_TOKEN auto-populates
+   Everything else is ready
+
+---
+
 _ChMS Capstone Project | Developer Onboarding Guide | Version 1.0 | May 2026_
