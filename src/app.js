@@ -75,4 +75,6 @@ app.use((err, req, res, next) => {
   res.status(statusCode).json({ success: false, error: message });
 });
 
+const memberRoutes = require("./routes/member.routes");
+app.use("/api/v1/members", memberRoutes);
 module.exports = app;
