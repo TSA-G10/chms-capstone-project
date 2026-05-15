@@ -30,6 +30,7 @@ const attendanceSchema = new mongoose.Schema(
 );
 
 // Compound unique index — prevents duplicate check-in
-attendanceSchema.index({ eventId: 1, memberId: 1 }, { unique: true });
+attendanceSchema.index({ checkedInAt: 1 });
+attendanceSchema.index({ eventId: 1, checkedInAt: 1 });
 
 module.exports = mongoose.model("Attendance", attendanceSchema);

@@ -38,6 +38,10 @@ const serviceContributionSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
+// Compound indexes for efficient querying
+serviceContributionSchema.index({ date: 1, category: 1 });
+serviceContributionSchema.index({ date: 1 });
+
 module.exports = mongoose.model(
   "ServiceContribution",
   serviceContributionSchema,
