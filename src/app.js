@@ -29,7 +29,7 @@ app.get("/health", (req, res) => {
 const fellowshipRoutes = require("./routes/fellowship.routes");
 // const staffRoutes        = require('./routes/staff.routes');
 // const announcementRoutes = require('./routes/announcement.routes');
-// const missionRoutes      = require('./routes/mission.routes');
+const missionRoutes = require("./routes/mission.routes");
 // const financeRoutes      = require('./routes/finance.routes');
 // const eventRoutes        = require('./routes/event.routes');
 // const reportRoutes       = require('./routes/report.routes');
@@ -47,7 +47,7 @@ const fellowshipRoutes = require("./routes/fellowship.routes");
 app.use("/api/v1/fellowships", fellowshipRoutes);
 // app.use('/api/v1/staff',         staffRoutes);
 // app.use('/api/v1/announcements', announcementRoutes);
-// app.use('/api/v1/missions',      missionRoutes);
+app.use("/api/v1/missions", missionRoutes);
 // app.use('/api/v1/finance',       financeRoutes);
 // app.use('/api/v1/events',        eventRoutes);
 // app.use('/api/v1/reports',       reportRoutes);
