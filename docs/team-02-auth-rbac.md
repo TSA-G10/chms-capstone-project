@@ -438,6 +438,8 @@ module.exports = { register, login, refresh, logout, changePassword };
 
 ### T-AU-005 & T-AU-006 — Auth Routes with Rate Limiting (Auth Dev 3)
 
+// We are here
+
 **Branch:** `feature/auth-endpoints`
 
 Install rate limiter (coordinate with Team 6 — may already be in package.json):
@@ -505,8 +507,8 @@ git push origin feature/auth-jwt-utilities
 # Request review from Auth Lead
 
 # Auth Dev 3
-git add src/routes/auth.routes.js
-git commit -m "feat(auth): add auth routes with rate limiting on /login"
+git add src/routes/auth.routes.js src/app.js
+git commit -m "feat(auth): add auth routes with rate limiting on /login and mount in app.js"
 git push origin feature/auth-endpoints
 # Open Pull Request: feature/auth-endpoints → team-02-auth-rbac
 # Request review from Auth Lead

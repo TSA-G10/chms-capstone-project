@@ -1,0 +1,856 @@
+{
+  "info": {
+    "_postman_id": "6b9dcdc6-ab94-406e-b44e-e99fc6e7ac1d",
+    "name": "ChMS API v1",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "45401758"
+  },
+  "item": [
+    {
+      "name": "AUTH",
+      "item": [
+        {
+          "name": "Login",
+          "item": [
+            {
+              "name": "POST",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ],
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  "if (pm.response.code === 200) {\r",
+                  "  const json = pm.response.json();\r",
+                  "  pm.environment.set(\"ACCESS_TOKEN\", json.data.accessToken);\r",
+                  "  pm.environment.set(\"REFRESH_TOKEN\", json.data.refreshToken);\r",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Register",
+          "item": [
+            {
+              "name": "POST",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Refresh Token",
+          "item": [
+            {
+              "name": "POST",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Logout",
+          "item": [
+            {
+              "name": "POST",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Change Password",
+          "item": [
+            {
+              "name": "POST",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "MEMBER",
+      "item": [
+        {
+          "name": "All Members",
+          "item": [
+            {
+              "name": "GET",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Create Member",
+          "item": [
+            {
+              "name": "POST",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Member By ID",
+          "item": [
+            {
+              "name": "GET",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Update Member",
+          "item": [
+            {
+              "name": "PUT",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Delete Member",
+          "item": [
+            {
+              "name": "DEL",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Member Attendance",
+          "item": [
+            {
+              "name": "GET",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ORG UNITS",
+      "item": [
+        {
+          "name": "All Org Unit",
+          "item": [
+            {
+              "name": "GET",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Create Org Unit",
+          "item": [
+            {
+              "name": "POST",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Org Unit By ID",
+          "item": [
+            {
+              "name": "GET",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Update Org Unit",
+          "item": [
+            {
+              "name": "PUT",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Delete Org Unit",
+          "item": [
+            {
+              "name": "DEL",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Assign Leader",
+          "item": [
+            {
+              "name": "POST",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "FELLOWSHIPS",
+      "item": [
+        {
+          "name": "All Fellowships",
+          "item": [
+            {
+              "name": "GET",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Create Fellowship",
+          "item": [
+            {
+              "name": "POST",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Fellowship By ID",
+          "item": [
+            {
+              "name": "GET",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Update Fellowship",
+          "item": [
+            {
+              "name": "PUT",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Delete Fellowship",
+          "item": [
+            {
+              "name": "DEL",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Fellowship Members",
+          "item": [
+            {
+              "name": "GET",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "STAFF",
+      "item": [
+        {
+          "name": "All Staff",
+          "item": [
+            {
+              "name": "GET",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Create Staff",
+          "item": [
+            {
+              "name": "POST",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Staff By ID",
+          "item": [
+            {
+              "name": "GET",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Update Staff",
+          "item": [
+            {
+              "name": "PUT",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Delete STaff",
+          "item": [
+            {
+              "name": "DEL",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "FINANCE",
+      "item": [
+        {
+          "name": "Record Contribution",
+          "item": [
+            {
+              "name": "POST",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "List Contributions",
+          "item": [
+            {
+              "name": "GET",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Log Expense",
+          "item": [
+            {
+              "name": "POST",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "List Expense",
+          "item": [
+            {
+              "name": "GET",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Finance Summary",
+          "item": [
+            {
+              "name": "GET",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "EVENTS",
+      "item": [
+        {
+          "name": "All Events",
+          "item": [
+            {
+              "name": "GET",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Create Event",
+          "item": [
+            {
+              "name": "POST",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Event By ID",
+          "item": [
+            {
+              "name": "GET",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Update Event",
+          "item": [
+            {
+              "name": "PUT",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Delete Event",
+          "item": [
+            {
+              "name": "DEL",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Record Attendance",
+          "item": [
+            {
+              "name": "POST",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Event Attendance",
+          "item": [
+            {
+              "name": "GET",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "INVENTORY",
+      "item": [
+        {
+          "name": "All Inventory",
+          "item": [
+            {
+              "name": "GET",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Create Item",
+          "item": [
+            {
+              "name": "POST",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Item By ID",
+          "item": [
+            {
+              "name": "GET",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Update Item",
+          "item": [
+            {
+              "name": "PUT",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Delete Item",
+          "item": [
+            {
+              "name": "DEL",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Link Expense",
+          "item": [
+            {
+              "name": "PUT",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "VENDORS",
+      "item": [
+        {
+          "name": "All Vendors",
+          "item": [
+            {
+              "name": "GET",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Create Vendor",
+          "item": [
+            {
+              "name": "POST",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Vendor By ID",
+          "item": [
+            {
+              "name": "GET",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Update Vendor",
+          "item": [
+            {
+              "name": "PUT",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Delete Vendor",
+          "item": [
+            {
+              "name": "DEL",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "WELFARE",
+      "item": [
+        {
+          "name": "All Cases",
+          "item": [
+            {
+              "name": "GET",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Create Case",
+          "item": [
+            {
+              "name": "POST",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Case By ID",
+          "item": [
+            {
+              "name": "GET",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Update Case",
+          "item": [
+            {
+              "name": "PUT",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Add Support Log",
+          "item": [
+            {
+              "name": "POST",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Support Log",
+          "item": [
+            {
+              "name": "GET",
+              "request": {
+                "method": "GET",
+                "header": []
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          "pm.request.headers.add({\r",
+          "  key: \"Authorization\",\r",
+          "  value: \"Bearer \" + pm.environment.get(\"ACCESS_TOKEN\"),\r",
+          "});"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ]
+}
