@@ -1,0 +1,1295 @@
+{
+  "info": {
+    "_postman_id": "6b9dcdc6-ab94-406e-b44e-e99fc6e7ac1d",
+    "name": "ChMS API v1",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "45401758"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "POST Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/auth/login",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Register (admin only)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/auth/register",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/auth/refresh",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "auth",
+                "refresh"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Logout",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/auth/logout",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "auth",
+                "logout"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Change Password",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/auth/change-password",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "auth",
+                "change-password"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              "if (pm.response.code === 200) {\r",
+              "  const json = pm.response.json();\r",
+              "  pm.environment.set(\"ACCESS_TOKEN\", json.data.accessToken);\r",
+              "  pm.environment.set(\"REFRESH_TOKEN\", json.data.refreshToken);\r",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Members",
+      "item": [
+        {
+          "name": "GET All Members",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/members?page=1&limit=20",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "members"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Create Member",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {\r",
+                  "  const json = pm.response.json();\r",
+                  "  pm.environment.set(\"MEMBER_ID\", json.data._id);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/members",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "members"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Member by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/members/{{MEMBER_ID}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "members",
+                "{{MEMBER_ID}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT Update Member",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/members/{{MEMBER_ID}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "members",
+                "{{MEMBER_ID}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DEL Delete Member",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/members/{{MEMBER_ID}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "members",
+                "{{MEMBER_ID}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Member Attendance",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/members/{{MEMBER_ID}}/attendance",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "members",
+                "{{MEMBER_ID}}",
+                "attendance"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Org Units",
+      "item": [
+        {
+          "name": "GET All Org Units",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/org-units",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "org-units"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Create Org Unit",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {\r",
+                  "  const json = pm.response.json();\r",
+                  "  pm.environment.set(\"ORG_UNIT_ID\", json.data._id);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/org-units",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "org-units"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Org Uni by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/org-units/{{ORG_UNIT_ID}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "org-units",
+                "{{ORG_UNIT_ID}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT Update Org Unit",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/org-units/{{ORG_UNIT_ID}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "org-units",
+                "{{ORG_UNIT_ID}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DEL Delete Org Unit",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/org-units/{{ORG_UNIT_ID}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "org-units",
+                "{{ORG_UNIT_ID}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Assign Leader",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/org-units/{{ORG_UNIT_ID}}/assign-leader",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "org-units",
+                "{{ORG_UNIT_ID}}",
+                "assign-leader"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Fellowships",
+      "item": [
+        {
+          "name": "GET All Fellowships",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/fellowships",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "fellowships"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Create Fellowship",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {\r",
+                  "  const json = pm.response.json();\r",
+                  "  pm.environment.set(\"FELLOWSHIP_ID\", json.data._id);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/fellowships",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "fellowships"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Fellowship by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/fellowships/{{FELLOWSHIP_ID}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "fellowships",
+                "{{FELLOWSHIP_ID}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT Update Fellowship",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/fellowships/{{FELLOWSHIP_ID}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "fellowships",
+                "{{FELLOWSHIP_ID}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DEL Delete Fellowship",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/fellowships/{{FELLOWSHIP_ID}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "fellowships",
+                "{{FELLOWSHIP_ID}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Fellowship Members",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/fellowships/{{FELLOWSHIP_ID}}/members",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "fellowships",
+                "{{FELLOWSHIP_ID}}",
+                "members"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Staff",
+      "item": [
+        {
+          "name": "GET All Staff",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/staff",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "staff"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Create Staff",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {\r",
+                  "  const json = pm.response.json();\r",
+                  "  pm.environment.set(\"STAFF_ID\", json.data._id);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/staff",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "staff"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Staff by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/staff/{{STAFF_ID}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "staff",
+                "{{STAFF_ID}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT Update Staff",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/staff/{{STAFF_ID}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "staff",
+                "{{STAFF_ID}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DEL Delete Staff",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/staff/{{STAFF_ID}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "staff",
+                "{{STAFF_ID}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Finance",
+      "item": [
+        {
+          "name": "POST Record Contributions",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/finance/contributions",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "finance",
+                "contributions"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET List Contributions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/finance/contributions",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "finance",
+                "contributions"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Log Expense",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/finance/expenses",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "finance",
+                "expenses"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET List Expenses",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/finance/expenses",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "finance",
+                "expenses"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Finance Summary",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/finance/summary",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "finance",
+                "summary"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Events",
+      "item": [
+        {
+          "name": "GET All Events",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/events",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "events"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Create Event",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {\r",
+                  "  const json = pm.response.json();\r",
+                  "  pm.environment.set(\"EVENT_ID\", json.data._id);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/events",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "events"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Event by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/events/{{EVENT_ID}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "events",
+                "{{EVENT_ID}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT Update Event",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/events/{{EVENT_ID}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "events",
+                "{{EVENT_ID}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DEL Delete Event",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/events/{{EVENT_ID}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "events",
+                "{{EVENT_ID}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Record Attendance",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/events/{{EVENT_ID}}/attendance",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "events",
+                "{{EVENT_ID}}",
+                "attendance"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Event Attendance",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/events/{{EVENT_ID}}/attendance",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "events",
+                "{{EVENT_ID}}",
+                "attendance"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Inventory",
+      "item": [
+        {
+          "name": "GET All Inventory",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/inventory",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "inventory"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Create Item",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {\r",
+                  "  const json = pm.response.json();\r",
+                  "  pm.environment.set(\"ITEM_ID\", json.data._id);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/inventory",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "inventory"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Item by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/inventory/{{ITEM_ID}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "inventory",
+                "{{ITEM_ID}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT Update Item",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/inventory/{{ITEM_ID}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "inventory",
+                "{{ITEM_ID}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DEL Delete Item",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/inventory/{{ITEM_ID}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "inventory",
+                "{{ITEM_ID}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT Link Expense",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/inventory/{{ITEM_ID}}/link-expense",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "inventory",
+                "{{ITEM_ID}}",
+                "link-expense"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Vendors",
+      "item": [
+        {
+          "name": "GET All Vendors",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/vendors",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "vendors"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Create Vendor",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {\r",
+                  "  const json = pm.response.json();\r",
+                  "  pm.environment.set(\"VENDOR_ID\", json.data._id);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/vendors",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "vendors"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Vendor by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/vendors/{{VENDOR_ID}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "vendors",
+                "{{VENDOR_ID}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT Update Vendor",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/vendors/{{VENDOR_ID}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "vendors",
+                "{{VENDOR_ID}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DEL Delete Vendor",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/vendors/{{VENDOR_ID}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "vendors",
+                "{{VENDOR_ID}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Welfare",
+      "item": [
+        {
+          "name": "GET All Cases",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/welfare",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "welfare"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Create Case",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {\r",
+                  "  const json = pm.response.json();\r",
+                  "  pm.environment.set(\"CASE_ID\", json.data._id);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/welfare",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "welfare"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Case by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/welfare/{{CASE_ID}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "welfare",
+                "{{CASE_ID}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT Update Case",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/welfare/{{CASE_ID}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "welfare",
+                "{{CASE_ID}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Add Support Log",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/welfare/{{CASE_ID}}/support-log",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "welfare",
+                "{{CASE_ID}}",
+                "support-log"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Support Log",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/welfare/{{CASE_ID}}/support-log",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "welfare",
+                "{{CASE_ID}}",
+                "support-log"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          "pm.request.headers.add({\r",
+          "  key: \"Authorization\",\r",
+          "  value: \"Bearer \" + pm.environment.get(\"ACCESS_TOKEN\"),\r",
+          "});"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ]
+}
