@@ -26,7 +26,7 @@ app.get("/health", (req, res) => {
 // const authRoutes         = require('./routes/auth.routes');
 // const memberRoutes       = require('./routes/member.routes');
 // const orgUnitRoutes      = require('./routes/orgUnit.routes');
-// const fellowshipRoutes   = require('./routes/fellowship.routes');
+const fellowshipRoutes = require("./routes/fellowship.routes");
 // const staffRoutes        = require('./routes/staff.routes');
 // const announcementRoutes = require('./routes/announcement.routes');
 // const missionRoutes      = require('./routes/mission.routes');
@@ -44,7 +44,7 @@ app.get("/health", (req, res) => {
 // app.use('/api/v1/auth',          authRoutes);
 // app.use('/api/v1/members',       memberRoutes);
 // app.use('/api/v1/org-units',     orgUnitRoutes);
-// app.use('/api/v1/fellowships',   fellowshipRoutes);
+app.use("/api/v1/fellowships", fellowshipRoutes);
 // app.use('/api/v1/staff',         staffRoutes);
 // app.use('/api/v1/announcements', announcementRoutes);
 // app.use('/api/v1/missions',      missionRoutes);
