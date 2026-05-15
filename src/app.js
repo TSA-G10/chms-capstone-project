@@ -29,6 +29,7 @@ const authRoutes = require("./routes/auth.routes");
 const fellowshipRoutes = require("./routes/fellowship.routes");
 // const staffRoutes        = require('./routes/staff.routes');
 // const announcementRoutes = require('./routes/announcement.routes');
+<<<<<<< HEAD
 // const missionRoutes      = require('./routes/mission.routes');
 const financeRoutes = require("./routes/finance.routes");
 const eventRoutes = require("./routes/event.routes");
@@ -44,6 +45,19 @@ const programRoutes = require("./routes/program.routes");
 const mediaRoutes = require("./routes/media.routes");
 const documentRoutes = require("./routes/document.routes");
 const auditRoutes = require("./routes/audit.routes");
+=======
+const missionRoutes = require("./routes/mission.routes");
+// const financeRoutes      = require('./routes/finance.routes');
+// const eventRoutes        = require('./routes/event.routes');
+// const reportRoutes       = require('./routes/report.routes');
+// const inventoryRoutes    = require('./routes/inventory.routes');
+// const vendorRoutes       = require('./routes/vendor.routes');
+// const welfareRoutes      = require('./routes/welfare.routes');
+// const programRoutes      = require('./routes/program.routes');
+// const mediaRoutes        = require('./routes/media.routes');
+// const documentRoutes     = require('./routes/document.routes');
+// const auditRoutes        = require('./routes/audit.routes');
+>>>>>>> 5d29a2bdb7f724b2778b6b923214d21538e6d8ef
 
 app.use("/api/v1/auth", authRoutes);
 // app.use('/api/v1/members',       memberRoutes);
@@ -51,6 +65,7 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/fellowships", fellowshipRoutes);
 // app.use('/api/v1/staff',         staffRoutes);
 // app.use('/api/v1/announcements', announcementRoutes);
+<<<<<<< HEAD
 // app.use('/api/v1/missions',      missionRoutes);
 app.use("/api/v1/finance", financeRoutes);
 app.use("/api/v1/events", eventRoutes);
@@ -66,6 +81,19 @@ app.use("/api/v1/programs", programRoutes);
 app.use("/api/v1/media", mediaRoutes);
 app.use("/api/v1/documents", documentRoutes);
 app.use("/api/v1/audit", auditRoutes);
+=======
+app.use("/api/v1/missions", missionRoutes);
+// app.use('/api/v1/finance',       financeRoutes);
+// app.use('/api/v1/events',        eventRoutes);
+// app.use('/api/v1/reports',       reportRoutes);
+// app.use('/api/v1/inventory',     inventoryRoutes);
+// app.use('/api/v1/vendors',       vendorRoutes);
+// app.use('/api/v1/welfare',       welfareRoutes);
+// app.use('/api/v1/programs',      programRoutes);
+// app.use('/api/v1/media',         mediaRoutes);
+// app.use('/api/v1/documents',     documentRoutes);
+// app.use('/api/v1/audit',         auditRoutes);
+>>>>>>> 5d29a2bdb7f724b2778b6b923214d21538e6d8ef
 
 // ─── 404 Handler ─────────────────────────────────────────────────────────────
 app.use((req, res) => {
