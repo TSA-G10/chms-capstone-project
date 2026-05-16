@@ -20,9 +20,6 @@ app.get("/health", (req, res) => {
 });
 
 // ─── API Routes ──────────────────────────────────────────────────────────────
-// Routes are mounted here as each team delivers their route files.
-// Uncomment each line when the corresponding team's PR is merged to develop.
-
 const authRoutes = require("./routes/auth.routes");
 const memberRoutes = require("./routes/member.routes");
 const orgUnitRoutes = require("./routes/orgUnit.routes");
