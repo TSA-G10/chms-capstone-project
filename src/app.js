@@ -40,6 +40,7 @@ const missionRoutes = require("./routes/mission.routes");
 // const mediaRoutes        = require('./routes/media.routes');
 // const documentRoutes     = require('./routes/document.routes');
 // const auditRoutes        = require('./routes/audit.routes');
+const orgUnitRoutes = require("./routes/orgUnit.routes");
 
 // app.use('/api/v1/auth',          authRoutes);
 // app.use('/api/v1/members',       memberRoutes);
@@ -58,6 +59,8 @@ app.use("/api/v1/missions", missionRoutes);
 // app.use('/api/v1/media',         mediaRoutes);
 // app.use('/api/v1/documents',     documentRoutes);
 // app.use('/api/v1/audit',         auditRoutes);
+app.use("/api/v1/org-units", orgUnitRoutes);
+
 
 // ─── 404 Handler ─────────────────────────────────────────────────────────────
 app.use((req, res) => {
