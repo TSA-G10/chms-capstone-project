@@ -608,11 +608,11 @@ git branch -d feature/qa-auth-tests
 
 **Phase 1 Exit Criteria:**
 
-- [ ] GitHub repo live — all 20 developers have cloned it and confirmed access
-- [ ] Branch protection on `main` and `develop` — no direct push allowed
-- [ ] Folder structure merged to `team-06-devops-qa` — every developer pulls it on Day 1
-- [ ] `npm run dev` → server boots with no errors
-- [ ] `GET /health` returns `200 OK` — confirmed in browser and Postman
+- [x] GitHub repo live — all 20 developers have cloned it and confirmed access
+- [x] Branch protection on `main` and `develop` — no direct push allowed
+- [x] Folder structure merged to `team-06-devops-qa` — every developer pulls it on Day 1
+- [x] `npm run dev` → server boots with no errors
+- [x] `GET /health` returns `200 OK` — confirmed in browser and Postman
 - [ ] `npm test` → all auth integration tests pass
 
 ---

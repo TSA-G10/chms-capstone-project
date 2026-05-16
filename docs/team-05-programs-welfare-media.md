@@ -479,8 +479,9 @@ git add src/services/inventory.service.js \
         src/routes/inventory.routes.js \
         src/services/vendor.service.js \
         src/controllers/vendor.controller.js \
-        src/routes/vendor.routes.js
-git commit -m "feat(inventory-vendors): add Inventory CRUD with expense linkage and Vendor CRUD"
+        src/routes/vendor.routes.js \
+        src/app.js
+git commit -m "feat(inventory-vendors): add Inventory CRUD with expense linkage and Vendor CRUD; mount routes in app.js"
 git push origin feature/inventory-vendors
 # Open Pull Request: feature/inventory-vendors → team-05-programs-welfare-media
 ```
@@ -1454,16 +1455,17 @@ app.use("/api/v1/media", mediaRoutes);
 
 ```bash
 # API Dev C1 — media catalog
-git add src/services/media.service.js \
-        src/controllers/media.controller.js \
-        src/routes/media.routes.js
+git add src/services/media.service.js
 git commit -m "feat(media): add Media Resource CRUD with Cloudinary cleanup on delete"
 git push origin feature/media-catalog
 # Open Pull Request: feature/media-catalog → team-05-programs-welfare-media
 
 # API Dev C2 — media upload
-git add src/middlewares/mediaUpload.js
-git commit -m "feat(media): add media file upload middleware (JPEG, PNG, PDF, MP3, 50MB limit)"
+git add src/middlewares/mediaUpload.js \
+        src/controllers/media.controller.js \
+        src/routes/media.routes.js \
+        src/app.js
+git commit -m "feat(media): add media file upload middleware (JPEG, PNG, PDF, MP3, 50MB limit); mount route in app.js"
 git push origin feature/media-upload
 # Open Pull Request: feature/media-upload → team-05-programs-welfare-media
 ```
