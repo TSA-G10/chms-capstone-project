@@ -11,8 +11,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
-const staffRoutes = require("./routes/staff.routes");
-app.use("/api/v1/staff", staffRoutes);
 
 // ─── Health Check ────────────────────────────────────────────────────────────
 app.get("/health", (req, res) => {
@@ -74,6 +72,5 @@ app.use((err, req, res, next) => {
   res.status(statusCode).json({ success: false, error: message });
 });
 
-const memberRoutes = require("./routes/member.routes");
-app.use("/api/v1/members", memberRoutes);
+
 module.exports = app;
