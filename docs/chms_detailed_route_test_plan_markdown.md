@@ -155,6 +155,7 @@ CREATE MEDIA
 ### Symptoms
 Expected `403 Forbidden` but received `401 Unauthorized`.
 
+
 ### Root Cause
 `MEMBER_TOKEN` missing or invalid.
 
