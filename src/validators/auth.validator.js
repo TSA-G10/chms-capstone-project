@@ -14,6 +14,7 @@ const registerSchema = Joi.object({
       "welfare_officer",
       "staff",
       "volunteer",
+      "member", 
     )
     .required(),
   phone: Joi.string().optional(),

@@ -34,6 +34,7 @@ const userSchema = new mongoose.Schema(
         "welfare_officer",
         "staff",
         "volunteer",
+        "member",
       ],
       required: [true, "Role is required"],
     },
