@@ -86,9 +86,9 @@ if (json && json.success) {
 {
   "firstName": "John",
   "lastName": "Doe",
-  "email": "member@chms.com",
+  "email": "staff@chms.com",
   "password": "Password123!",
-  "role": "member"
+  "role": "staff"
 }
 ```
 
@@ -103,7 +103,7 @@ if (json && json.success) {
 
 ```json
 {
-  "email": "member@chms.com",
+  "email": "staff@chms.com",
   "password": "Password123!"
 }
 ```
