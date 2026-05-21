@@ -123,8 +123,8 @@ Follow the QA guide carefully to avoid false failures.
 ## 7. Newman Test Command
 
 ```bash
-newman run "postman/ChMS_API_v1.postman_collection.json" \
--e "postman/ChMS Local.postman_environment.json" \
---reporters cli,json \
---reporter-json-export newman-results.json
+newman run "postman/ChMS API v1.postman_collection.json" \
+  -e "postman/ChMS Local.postman_environment.json" \
+  --reporters cli,json \
+  --reporter-json-export postman/newman-results.json
 ```

@@ -1,6 +1,6 @@
 {
   "info": {
-    "_postman_id": "6b9dcdc6-ab94-406e-b44e-e99fc6e7ac1d",
+    "_postman_id": "c8427112-c5bc-4963-8214-568b67f0c1b8",
     "name": "ChMS API v1",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "45401758"
@@ -11,9 +11,35 @@
       "item": [
         {
           "name": "POST Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "\r",
+                  "const json = pm.response.json();\r",
+                  "if (json && json.success && json.user && json.user.id) {\r",
+                  "  pm.environment.set(\"ADMIN_USER_ID\", json.user.id);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "request": {
             "method": "POST",
             "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "  {\r\n  \"email\": \"admin@chms.com\",\r\n  \"password\": \"Password123!\"\r\n  }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
               "raw": "{{BASE_URL}}/auth/login",
               "host": [
@@ -32,6 +58,15 @@
           "request": {
             "method": "POST",
             "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"firstName\": \"John\",\r\n  \"lastName\": \"Doe\",\r\n  \"email\": \"member@chms.com\",\r\n  \"password\": \"Password123!\",\r\n  \"role\": \"member\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
               "raw": "{{BASE_URL}}/auth/register",
               "host": [
@@ -119,11 +154,7 @@
             "packages": {},
             "requests": {},
             "exec": [
-              "if (pm.response.code === 200) {\r",
-              "  const json = pm.response.json();\r",
-              "  pm.environment.set(\"ACCESS_TOKEN\", json.data.accessToken);\r",
-              "  pm.environment.set(\"REFRESH_TOKEN\", json.data.refreshToken);\r",
-              "}"
+              ""
             ]
           }
         }
@@ -577,6 +608,9 @@
                   "if (pm.response.code === 201) {\r",
                   "  const json = pm.response.json();\r",
                   "  pm.environment.set(\"STAFF_ID\", json.data._id);\r",
+                  "  console.log(\r",
+                  "    \"STAFF_ID safely updated to Staff Profile Document ID: \" + json.data._id,\r",
+                  "  );\r",
                   "}"
                 ],
                 "type": "text/javascript",
@@ -588,6 +622,15 @@
           "request": {
             "method": "POST",
             "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"userId\": \"{{STAFF_ID}}\",\r\n  \"position\": \"Church Administrator\",\r\n  \"department\": \"Administration\",\r\n  \"isVolunteer\": false,\r\n  \"hireDate\": \"2024-01-01\",\r\n  \"isActive\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
               "raw": "{{BASE_URL}}/staff",
               "host": [
@@ -664,6 +707,15 @@
           "request": {
             "method": "POST",
             "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"memberId\": \"{{MEMBER_ID}}\",\r\n  \"eventId\": \"{{EVENT_ID}}\",\r\n  \"amount\": 5000,\r\n  \"type\": \"tithe\",\r\n  \"date\": \"2025-05-01\",\r\n  \"notes\": \"Monthly tithe\",\r\n  \"category\": \"missions\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
               "raw": "{{BASE_URL}}/finance/contributions",
               "host": [
@@ -1286,6 +1338,29 @@
         },
         {
           "name": "GET All Announcements — No Auth (401)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Remove Authorization header for this request",
+                  "pm.request.headers.remove('Authorization');"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Should return 401 Unauthorized when no token provided', function () {",
+                  "  pm.response.to.have.status(401);",
+                  "});"
+                ]
+              }
+            }
+          ],
           "request": {
             "method": "GET",
             "header": [
@@ -1305,6 +1380,42 @@
               ]
             }
           },
+          "response": []
+        },
+        {
+          "name": "POST Create Announcement",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "if (pm.response.code === 201 || pm.response.code === 200) {",
+                  "  const json = pm.response.json();",
+                  "  if (json.data && json.data._id) pm.environment.set(\"ANNOUNCEMENT_ID\", json.data._id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/announcements",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "announcements"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Create Announcement — No Auth (401)",
           "event": [
             {
               "listen": "prerequest",
@@ -1328,42 +1439,6 @@
               }
             }
           ],
-          "response": []
-        },
-        {
-          "name": "POST Create Announcement",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "url": {
-              "raw": "{{BASE_URL}}/announcements",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "announcements"
-              ]
-            }
-          },
-          "response": [],
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "packages": {},
-                "exec": [
-                  "if (pm.response.code === 201 || pm.response.code === 200) {",
-                  "  const json = pm.response.json();",
-                  "  if (json.data && json.data._id) pm.environment.set(\"ANNOUNCEMENT_ID\", json.data._id);",
-                  "}"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "POST Create Announcement — No Auth (401)",
           "request": {
             "method": "POST",
             "header": [
@@ -1383,52 +1458,10 @@
               ]
             }
           },
-          "event": [
-            {
-              "listen": "prerequest",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "// Remove Authorization header for this request",
-                  "pm.request.headers.remove('Authorization');"
-                ]
-              }
-            },
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Should return 401 Unauthorized when no token provided', function () {",
-                  "  pm.response.to.have.status(401);",
-                  "});"
-                ]
-              }
-            }
-          ],
           "response": []
         },
         {
           "name": "POST Create Announcement — Low Privilege (403)",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{MEMBER_TOKEN}}",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{BASE_URL}}/announcements",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "announcements"
-              ]
-            }
-          },
           "event": [
             {
               "listen": "prerequest",
@@ -1452,6 +1485,25 @@
               }
             }
           ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{MEMBER_TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/announcements",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "announcements"
+              ]
+            }
+          },
           "response": []
         },
         {
@@ -1474,26 +1526,6 @@
         },
         {
           "name": "GET Announcement by ID — No Auth (401)",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{BASE_URL}}/announcements/{{ANNOUNCEMENT_ID}}",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "announcements",
-                "{{ANNOUNCEMENT_ID}}"
-              ]
-            }
-          },
           "event": [
             {
               "listen": "prerequest",
@@ -1517,6 +1549,26 @@
               }
             }
           ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/announcements/{{ANNOUNCEMENT_ID}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "announcements",
+                "{{ANNOUNCEMENT_ID}}"
+              ]
+            }
+          },
           "response": []
         },
         {
@@ -1539,26 +1591,6 @@
         },
         {
           "name": "PUT Update Announcement — No Auth (401)",
-          "request": {
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{BASE_URL}}/announcements/{{ANNOUNCEMENT_ID}}",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "announcements",
-                "{{ANNOUNCEMENT_ID}}"
-              ]
-            }
-          },
           "event": [
             {
               "listen": "prerequest",
@@ -1582,16 +1614,12 @@
               }
             }
           ],
-          "response": []
-        },
-        {
-          "name": "PUT Update Announcement — Low Privilege (403)",
           "request": {
             "method": "PUT",
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{MEMBER_TOKEN}}",
+                "value": "",
                 "type": "text"
               }
             ],
@@ -1606,6 +1634,10 @@
               ]
             }
           },
+          "response": []
+        },
+        {
+          "name": "PUT Update Announcement — Low Privilege (403)",
           "event": [
             {
               "listen": "prerequest",
@@ -1629,6 +1661,26 @@
               }
             }
           ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{MEMBER_TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/announcements/{{ANNOUNCEMENT_ID}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "announcements",
+                "{{ANNOUNCEMENT_ID}}"
+              ]
+            }
+          },
           "response": []
         },
         {
@@ -1651,26 +1703,6 @@
         },
         {
           "name": "DEL Delete Announcement — No Auth (401)",
-          "request": {
-            "method": "DELETE",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{BASE_URL}}/announcements/{{ANNOUNCEMENT_ID}}",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "announcements",
-                "{{ANNOUNCEMENT_ID}}"
-              ]
-            }
-          },
           "event": [
             {
               "listen": "prerequest",
@@ -1694,16 +1726,12 @@
               }
             }
           ],
-          "response": []
-        },
-        {
-          "name": "DEL Delete Announcement — Low Privilege (403)",
           "request": {
             "method": "DELETE",
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{MEMBER_TOKEN}}",
+                "value": "",
                 "type": "text"
               }
             ],
@@ -1718,6 +1746,10 @@
               ]
             }
           },
+          "response": []
+        },
+        {
+          "name": "DEL Delete Announcement — Low Privilege (403)",
           "event": [
             {
               "listen": "prerequest",
@@ -1741,6 +1773,26 @@
               }
             }
           ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{MEMBER_TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/announcements/{{ANNOUNCEMENT_ID}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "announcements",
+                "{{ANNOUNCEMENT_ID}}"
+              ]
+            }
+          },
           "response": []
         }
       ]
@@ -1767,6 +1819,29 @@
         },
         {
           "name": "GET All Missions — No Auth (401)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Remove Authorization header for this request",
+                  "pm.request.headers.remove('Authorization');"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Should return 401 Unauthorized when no token provided', function () {",
+                  "  pm.response.to.have.status(401);",
+                  "});"
+                ]
+              }
+            }
+          ],
           "request": {
             "method": "GET",
             "header": [
@@ -1786,6 +1861,42 @@
               ]
             }
           },
+          "response": []
+        },
+        {
+          "name": "POST Create Mission",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "if (pm.response.code === 201 || pm.response.code === 200) {",
+                  "  const json = pm.response.json();",
+                  "  if (json.data && json.data._id) pm.environment.set(\"MISSION_ID\", json.data._id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/missions",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "missions"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Create Mission — No Auth (401)",
           "event": [
             {
               "listen": "prerequest",
@@ -1809,42 +1920,6 @@
               }
             }
           ],
-          "response": []
-        },
-        {
-          "name": "POST Create Mission",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "url": {
-              "raw": "{{BASE_URL}}/missions",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "missions"
-              ]
-            }
-          },
-          "response": [],
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "packages": {},
-                "exec": [
-                  "if (pm.response.code === 201 || pm.response.code === 200) {",
-                  "  const json = pm.response.json();",
-                  "  if (json.data && json.data._id) pm.environment.set(\"MISSION_ID\", json.data._id);",
-                  "}"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "POST Create Mission — No Auth (401)",
           "request": {
             "method": "POST",
             "header": [
@@ -1864,52 +1939,10 @@
               ]
             }
           },
-          "event": [
-            {
-              "listen": "prerequest",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "// Remove Authorization header for this request",
-                  "pm.request.headers.remove('Authorization');"
-                ]
-              }
-            },
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Should return 401 Unauthorized when no token provided', function () {",
-                  "  pm.response.to.have.status(401);",
-                  "});"
-                ]
-              }
-            }
-          ],
           "response": []
         },
         {
           "name": "POST Create Mission — Low Privilege (403)",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{MEMBER_TOKEN}}",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{BASE_URL}}/missions",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "missions"
-              ]
-            }
-          },
           "event": [
             {
               "listen": "prerequest",
@@ -1933,6 +1966,25 @@
               }
             }
           ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{MEMBER_TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/missions",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "missions"
+              ]
+            }
+          },
           "response": []
         },
         {
@@ -1955,26 +2007,6 @@
         },
         {
           "name": "GET Mission by ID — No Auth (401)",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{BASE_URL}}/missions/{{MISSION_ID}}",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "missions",
-                "{{MISSION_ID}}"
-              ]
-            }
-          },
           "event": [
             {
               "listen": "prerequest",
@@ -1998,6 +2030,26 @@
               }
             }
           ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/missions/{{MISSION_ID}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "missions",
+                "{{MISSION_ID}}"
+              ]
+            }
+          },
           "response": []
         },
         {
@@ -2020,26 +2072,6 @@
         },
         {
           "name": "PUT Update Mission — No Auth (401)",
-          "request": {
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{BASE_URL}}/missions/{{MISSION_ID}}",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "missions",
-                "{{MISSION_ID}}"
-              ]
-            }
-          },
           "event": [
             {
               "listen": "prerequest",
@@ -2063,16 +2095,12 @@
               }
             }
           ],
-          "response": []
-        },
-        {
-          "name": "PUT Update Mission — Low Privilege (403)",
           "request": {
             "method": "PUT",
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{MEMBER_TOKEN}}",
+                "value": "",
                 "type": "text"
               }
             ],
@@ -2087,6 +2115,10 @@
               ]
             }
           },
+          "response": []
+        },
+        {
+          "name": "PUT Update Mission — Low Privilege (403)",
           "event": [
             {
               "listen": "prerequest",
@@ -2110,6 +2142,26 @@
               }
             }
           ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{MEMBER_TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/missions/{{MISSION_ID}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "missions",
+                "{{MISSION_ID}}"
+              ]
+            }
+          },
           "response": []
         },
         {
@@ -2133,27 +2185,6 @@
         },
         {
           "name": "POST Add Volunteer — No Auth (401)",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{BASE_URL}}/missions/{{MISSION_ID}}/volunteers",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "missions",
-                "{{MISSION_ID}}",
-                "volunteers"
-              ]
-            }
-          },
           "event": [
             {
               "listen": "prerequest",
@@ -2177,16 +2208,12 @@
               }
             }
           ],
-          "response": []
-        },
-        {
-          "name": "POST Add Volunteer — Low Privilege (403)",
           "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{MEMBER_TOKEN}}",
+                "value": "",
                 "type": "text"
               }
             ],
@@ -2202,6 +2229,10 @@
               ]
             }
           },
+          "response": []
+        },
+        {
+          "name": "POST Add Volunteer — Low Privilege (403)",
           "event": [
             {
               "listen": "prerequest",
@@ -2225,6 +2256,27 @@
               }
             }
           ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{MEMBER_TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/missions/{{MISSION_ID}}/volunteers",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "missions",
+                "{{MISSION_ID}}",
+                "volunteers"
+              ]
+            }
+          },
           "response": []
         },
         {
@@ -2248,6 +2300,29 @@
         },
         {
           "name": "GET Mission Volunteers — No Auth (401)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Remove Authorization header for this request",
+                  "pm.request.headers.remove('Authorization');"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Should return 401 Unauthorized when no token provided', function () {",
+                  "  pm.response.to.have.status(401);",
+                  "});"
+                ]
+              }
+            }
+          ],
           "request": {
             "method": "GET",
             "header": [
@@ -2269,267 +2344,6 @@
               ]
             }
           },
-          "event": [
-            {
-              "listen": "prerequest",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "// Remove Authorization header for this request",
-                  "pm.request.headers.remove('Authorization');"
-                ]
-              }
-            },
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Should return 401 Unauthorized when no token provided', function () {",
-                  "  pm.response.to.have.status(401);",
-                  "});"
-                ]
-              }
-            }
-          ],
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "REPORTS",
-      "item": [
-        {
-          "name": "GET Attendance Report",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{BASE_URL}}/reports/attendance?from=&to=",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "reports",
-                "attendance"
-              ],
-              "query": [
-                {
-                  "key": "from",
-                  "value": "",
-                  "disabled": false
-                },
-                {
-                  "key": "to",
-                  "value": "",
-                  "disabled": false
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "GET Attendance Report — No Auth (401)",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{BASE_URL}}/reports/attendance?from=&to=",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "reports",
-                "attendance"
-              ],
-              "query": [
-                {
-                  "key": "from",
-                  "value": "",
-                  "disabled": false
-                },
-                {
-                  "key": "to",
-                  "value": "",
-                  "disabled": false
-                }
-              ]
-            }
-          },
-          "event": [
-            {
-              "listen": "prerequest",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "// Remove Authorization header for this request",
-                  "pm.request.headers.remove('Authorization');"
-                ]
-              }
-            },
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Should return 401 Unauthorized when no token provided', function () {",
-                  "  pm.response.to.have.status(401);",
-                  "});"
-                ]
-              }
-            }
-          ],
-          "response": []
-        },
-        {
-          "name": "GET Finance Report",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{BASE_URL}}/reports/finance?period=monthly",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "reports",
-                "finance"
-              ],
-              "query": [
-                {
-                  "key": "period",
-                  "value": "monthly",
-                  "disabled": false
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "GET Finance Report — No Auth (401)",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{BASE_URL}}/reports/finance?period=monthly",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "reports",
-                "finance"
-              ],
-              "query": [
-                {
-                  "key": "period",
-                  "value": "monthly",
-                  "disabled": false
-                }
-              ]
-            }
-          },
-          "event": [
-            {
-              "listen": "prerequest",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "// Remove Authorization header for this request",
-                  "pm.request.headers.remove('Authorization');"
-                ]
-              }
-            },
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Should return 401 Unauthorized when no token provided', function () {",
-                  "  pm.response.to.have.status(401);",
-                  "});"
-                ]
-              }
-            }
-          ],
-          "response": []
-        },
-        {
-          "name": "GET Programs Report",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{BASE_URL}}/reports/programs",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "reports",
-                "programs"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "GET Programs Report — No Auth (401)",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{BASE_URL}}/reports/programs",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "reports",
-                "programs"
-              ]
-            }
-          },
-          "event": [
-            {
-              "listen": "prerequest",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "// Remove Authorization header for this request",
-                  "pm.request.headers.remove('Authorization');"
-                ]
-              }
-            },
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Should return 401 Unauthorized when no token provided', function () {",
-                  "  pm.response.to.have.status(401);",
-                  "});"
-                ]
-              }
-            }
-          ],
           "response": []
         }
       ]
@@ -2556,6 +2370,29 @@
         },
         {
           "name": "GET All Programs — No Auth (401)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Remove Authorization header for this request",
+                  "pm.request.headers.remove('Authorization');"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Should return 401 Unauthorized when no token provided', function () {",
+                  "  pm.response.to.have.status(401);",
+                  "});"
+                ]
+              }
+            }
+          ],
           "request": {
             "method": "GET",
             "header": [
@@ -2575,6 +2412,42 @@
               ]
             }
           },
+          "response": []
+        },
+        {
+          "name": "POST Create Program",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "if (pm.response.code === 201 || pm.response.code === 200) {",
+                  "  const json = pm.response.json();",
+                  "  if (json.data && json.data._id) pm.environment.set(\"PROGRAM_ID\", json.data._id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/programs",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "programs"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Create Program — No Auth (401)",
           "event": [
             {
               "listen": "prerequest",
@@ -2598,42 +2471,6 @@
               }
             }
           ],
-          "response": []
-        },
-        {
-          "name": "POST Create Program",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "url": {
-              "raw": "{{BASE_URL}}/programs",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "programs"
-              ]
-            }
-          },
-          "response": [],
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "packages": {},
-                "exec": [
-                  "if (pm.response.code === 201 || pm.response.code === 200) {",
-                  "  const json = pm.response.json();",
-                  "  if (json.data && json.data._id) pm.environment.set(\"PROGRAM_ID\", json.data._id);",
-                  "}"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "POST Create Program — No Auth (401)",
           "request": {
             "method": "POST",
             "header": [
@@ -2653,52 +2490,10 @@
               ]
             }
           },
-          "event": [
-            {
-              "listen": "prerequest",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "// Remove Authorization header for this request",
-                  "pm.request.headers.remove('Authorization');"
-                ]
-              }
-            },
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Should return 401 Unauthorized when no token provided', function () {",
-                  "  pm.response.to.have.status(401);",
-                  "});"
-                ]
-              }
-            }
-          ],
           "response": []
         },
         {
           "name": "POST Create Program — Low Privilege (403)",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{MEMBER_TOKEN}}",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{BASE_URL}}/programs",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "programs"
-              ]
-            }
-          },
           "event": [
             {
               "listen": "prerequest",
@@ -2722,6 +2517,25 @@
               }
             }
           ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{MEMBER_TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/programs",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "programs"
+              ]
+            }
+          },
           "response": []
         },
         {
@@ -2744,26 +2558,6 @@
         },
         {
           "name": "GET Program by ID — No Auth (401)",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{BASE_URL}}/programs/{{PROGRAM_ID}}",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "programs",
-                "{{PROGRAM_ID}}"
-              ]
-            }
-          },
           "event": [
             {
               "listen": "prerequest",
@@ -2787,6 +2581,26 @@
               }
             }
           ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/programs/{{PROGRAM_ID}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "programs",
+                "{{PROGRAM_ID}}"
+              ]
+            }
+          },
           "response": []
         },
         {
@@ -2809,26 +2623,6 @@
         },
         {
           "name": "PUT Update Program — No Auth (401)",
-          "request": {
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{BASE_URL}}/programs/{{PROGRAM_ID}}",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "programs",
-                "{{PROGRAM_ID}}"
-              ]
-            }
-          },
           "event": [
             {
               "listen": "prerequest",
@@ -2852,16 +2646,12 @@
               }
             }
           ],
-          "response": []
-        },
-        {
-          "name": "PUT Update Program — Low Privilege (403)",
           "request": {
             "method": "PUT",
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{MEMBER_TOKEN}}",
+                "value": "",
                 "type": "text"
               }
             ],
@@ -2876,6 +2666,10 @@
               ]
             }
           },
+          "response": []
+        },
+        {
+          "name": "PUT Update Program — Low Privilege (403)",
           "event": [
             {
               "listen": "prerequest",
@@ -2899,6 +2693,26 @@
               }
             }
           ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{MEMBER_TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/programs/{{PROGRAM_ID}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "programs",
+                "{{PROGRAM_ID}}"
+              ]
+            }
+          },
           "response": []
         },
         {
@@ -2921,26 +2735,6 @@
         },
         {
           "name": "DEL Delete Program — No Auth (401)",
-          "request": {
-            "method": "DELETE",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{BASE_URL}}/programs/{{PROGRAM_ID}}",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "programs",
-                "{{PROGRAM_ID}}"
-              ]
-            }
-          },
           "event": [
             {
               "listen": "prerequest",
@@ -2964,16 +2758,12 @@
               }
             }
           ],
-          "response": []
-        },
-        {
-          "name": "DEL Delete Program — Low Privilege (403)",
           "request": {
             "method": "DELETE",
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{MEMBER_TOKEN}}",
+                "value": "",
                 "type": "text"
               }
             ],
@@ -2988,6 +2778,10 @@
               ]
             }
           },
+          "response": []
+        },
+        {
+          "name": "DEL Delete Program — Low Privilege (403)",
           "event": [
             {
               "listen": "prerequest",
@@ -3011,6 +2805,26 @@
               }
             }
           ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{MEMBER_TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/programs/{{PROGRAM_ID}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "programs",
+                "{{PROGRAM_ID}}"
+              ]
+            }
+          },
           "response": []
         },
         {
@@ -3034,27 +2848,6 @@
         },
         {
           "name": "POST Add Session — No Auth (401)",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{BASE_URL}}/programs/{{PROGRAM_ID}}/sessions",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "programs",
-                "{{PROGRAM_ID}}",
-                "sessions"
-              ]
-            }
-          },
           "event": [
             {
               "listen": "prerequest",
@@ -3078,16 +2871,12 @@
               }
             }
           ],
-          "response": []
-        },
-        {
-          "name": "POST Add Session — Low Privilege (403)",
           "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{MEMBER_TOKEN}}",
+                "value": "",
                 "type": "text"
               }
             ],
@@ -3103,6 +2892,10 @@
               ]
             }
           },
+          "response": []
+        },
+        {
+          "name": "POST Add Session — Low Privilege (403)",
           "event": [
             {
               "listen": "prerequest",
@@ -3126,6 +2919,27 @@
               }
             }
           ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{MEMBER_TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/programs/{{PROGRAM_ID}}/sessions",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "programs",
+                "{{PROGRAM_ID}}",
+                "sessions"
+              ]
+            }
+          },
           "response": []
         },
         {
@@ -3149,27 +2963,6 @@
         },
         {
           "name": "POST Enroll Member — No Auth (401)",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{BASE_URL}}/programs/{{PROGRAM_ID}}/enroll",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "programs",
-                "{{PROGRAM_ID}}",
-                "enroll"
-              ]
-            }
-          },
           "event": [
             {
               "listen": "prerequest",
@@ -3193,16 +2986,12 @@
               }
             }
           ],
-          "response": []
-        },
-        {
-          "name": "POST Enroll Member — Low Privilege (403)",
           "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{MEMBER_TOKEN}}",
+                "value": "",
                 "type": "text"
               }
             ],
@@ -3218,6 +3007,10 @@
               ]
             }
           },
+          "response": []
+        },
+        {
+          "name": "POST Enroll Member — Low Privilege (403)",
           "event": [
             {
               "listen": "prerequest",
@@ -3241,6 +3034,27 @@
               }
             }
           ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{MEMBER_TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/programs/{{PROGRAM_ID}}/enroll",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "programs",
+                "{{PROGRAM_ID}}",
+                "enroll"
+              ]
+            }
+          },
           "response": []
         },
         {
@@ -3264,6 +3078,29 @@
         },
         {
           "name": "GET Participants — No Auth (401)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Remove Authorization header for this request",
+                  "pm.request.headers.remove('Authorization');"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Should return 401 Unauthorized when no token provided', function () {",
+                  "  pm.response.to.have.status(401);",
+                  "});"
+                ]
+              }
+            }
+          ],
           "request": {
             "method": "GET",
             "header": [
@@ -3285,6 +3122,47 @@
               ]
             }
           },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "DOCUMENTS",
+      "item": [
+        {
+          "name": "POST Upload Document",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "if (pm.response.code === 201 || pm.response.code === 200) {",
+                  "  const json = pm.response.json();",
+                  "  if (json.data && json.data._id) pm.environment.set(\"DOCUMENT_ID\", json.data._id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/documents",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "documents"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Upload Document — No Auth (401)",
           "event": [
             {
               "listen": "prerequest",
@@ -3308,47 +3186,6 @@
               }
             }
           ],
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "DOCUMENTS",
-      "item": [
-        {
-          "name": "POST Upload Document",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "url": {
-              "raw": "{{BASE_URL}}/documents",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "documents"
-              ]
-            }
-          },
-          "response": [],
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "packages": {},
-                "exec": [
-                  "if (pm.response.code === 201 || pm.response.code === 200) {",
-                  "  const json = pm.response.json();",
-                  "  if (json.data && json.data._id) pm.environment.set(\"DOCUMENT_ID\", json.data._id);",
-                  "}"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "POST Upload Document — No Auth (401)",
           "request": {
             "method": "POST",
             "header": [
@@ -3368,52 +3205,10 @@
               ]
             }
           },
-          "event": [
-            {
-              "listen": "prerequest",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "// Remove Authorization header for this request",
-                  "pm.request.headers.remove('Authorization');"
-                ]
-              }
-            },
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Should return 401 Unauthorized when no token provided', function () {",
-                  "  pm.response.to.have.status(401);",
-                  "});"
-                ]
-              }
-            }
-          ],
           "response": []
         },
         {
           "name": "POST Upload Document — Low Privilege (403)",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{MEMBER_TOKEN}}",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{BASE_URL}}/documents",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "documents"
-              ]
-            }
-          },
           "event": [
             {
               "listen": "prerequest",
@@ -3437,6 +3232,25 @@
               }
             }
           ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{MEMBER_TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/documents",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "documents"
+              ]
+            }
+          },
           "response": []
         },
         {
@@ -3455,13 +3269,11 @@
               "query": [
                 {
                   "key": "entityType",
-                  "value": "",
-                  "disabled": false
+                  "value": ""
                 },
                 {
                   "key": "entityId",
-                  "value": "",
-                  "disabled": false
+                  "value": ""
                 }
               ]
             }
@@ -3470,37 +3282,6 @@
         },
         {
           "name": "GET All Documents — No Auth (401)",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{BASE_URL}}/documents?entityType=&entityId=",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "documents"
-              ],
-              "query": [
-                {
-                  "key": "entityType",
-                  "value": "",
-                  "disabled": false
-                },
-                {
-                  "key": "entityId",
-                  "value": "",
-                  "disabled": false
-                }
-              ]
-            }
-          },
           "event": [
             {
               "listen": "prerequest",
@@ -3524,6 +3305,35 @@
               }
             }
           ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/documents?entityType=&entityId=",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "documents"
+              ],
+              "query": [
+                {
+                  "key": "entityType",
+                  "value": ""
+                },
+                {
+                  "key": "entityId",
+                  "value": ""
+                }
+              ]
+            }
+          },
           "response": []
         },
         {
@@ -3546,26 +3356,6 @@
         },
         {
           "name": "GET Document by ID — No Auth (401)",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{BASE_URL}}/documents/{{DOCUMENT_ID}}",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "documents",
-                "{{DOCUMENT_ID}}"
-              ]
-            }
-          },
           "event": [
             {
               "listen": "prerequest",
@@ -3589,6 +3379,26 @@
               }
             }
           ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/documents/{{DOCUMENT_ID}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "documents",
+                "{{DOCUMENT_ID}}"
+              ]
+            }
+          },
           "response": []
         },
         {
@@ -3611,26 +3421,6 @@
         },
         {
           "name": "DEL Delete Document — No Auth (401)",
-          "request": {
-            "method": "DELETE",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{BASE_URL}}/documents/{{DOCUMENT_ID}}",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "documents",
-                "{{DOCUMENT_ID}}"
-              ]
-            }
-          },
           "event": [
             {
               "listen": "prerequest",
@@ -3654,16 +3444,12 @@
               }
             }
           ],
-          "response": []
-        },
-        {
-          "name": "DEL Delete Document — Low Privilege (403)",
           "request": {
             "method": "DELETE",
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{MEMBER_TOKEN}}",
+                "value": "",
                 "type": "text"
               }
             ],
@@ -3678,6 +3464,10 @@
               ]
             }
           },
+          "response": []
+        },
+        {
+          "name": "DEL Delete Document — Low Privilege (403)",
           "event": [
             {
               "listen": "prerequest",
@@ -3701,6 +3491,26 @@
               }
             }
           ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{MEMBER_TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/documents/{{DOCUMENT_ID}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "documents",
+                "{{DOCUMENT_ID}}"
+              ]
+            }
+          },
           "response": []
         }
       ]
@@ -3727,6 +3537,29 @@
         },
         {
           "name": "GET All Media — No Auth (401)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Remove Authorization header for this request",
+                  "pm.request.headers.remove('Authorization');"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Should return 401 Unauthorized when no token provided', function () {",
+                  "  pm.response.to.have.status(401);",
+                  "});"
+                ]
+              }
+            }
+          ],
           "request": {
             "method": "GET",
             "header": [
@@ -3746,6 +3579,42 @@
               ]
             }
           },
+          "response": []
+        },
+        {
+          "name": "POST Create Media Entry",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "if (pm.response.code === 201 || pm.response.code === 200) {",
+                  "  const json = pm.response.json();",
+                  "  if (json.data && json.data._id) pm.environment.set(\"MEDIA_ID\", json.data._id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/media",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "media"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Create Media Entry — No Auth (401)",
           "event": [
             {
               "listen": "prerequest",
@@ -3769,42 +3638,6 @@
               }
             }
           ],
-          "response": []
-        },
-        {
-          "name": "POST Create Media Entry",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "url": {
-              "raw": "{{BASE_URL}}/media",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "media"
-              ]
-            }
-          },
-          "response": [],
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "packages": {},
-                "exec": [
-                  "if (pm.response.code === 201 || pm.response.code === 200) {",
-                  "  const json = pm.response.json();",
-                  "  if (json.data && json.data._id) pm.environment.set(\"MEDIA_ID\", json.data._id);",
-                  "}"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "POST Create Media Entry — No Auth (401)",
           "request": {
             "method": "POST",
             "header": [
@@ -3824,52 +3657,10 @@
               ]
             }
           },
-          "event": [
-            {
-              "listen": "prerequest",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "// Remove Authorization header for this request",
-                  "pm.request.headers.remove('Authorization');"
-                ]
-              }
-            },
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Should return 401 Unauthorized when no token provided', function () {",
-                  "  pm.response.to.have.status(401);",
-                  "});"
-                ]
-              }
-            }
-          ],
           "response": []
         },
         {
           "name": "POST Create Media Entry — Low Privilege (403)",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{MEMBER_TOKEN}}",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{BASE_URL}}/media",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "media"
-              ]
-            }
-          },
           "event": [
             {
               "listen": "prerequest",
@@ -3893,6 +3684,25 @@
               }
             }
           ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{MEMBER_TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/media",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "media"
+              ]
+            }
+          },
           "response": []
         },
         {
@@ -3915,26 +3725,6 @@
         },
         {
           "name": "GET Media by ID — No Auth (401)",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{BASE_URL}}/media/{{MEDIA_ID}}",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "media",
-                "{{MEDIA_ID}}"
-              ]
-            }
-          },
           "event": [
             {
               "listen": "prerequest",
@@ -3958,6 +3748,26 @@
               }
             }
           ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/media/{{MEDIA_ID}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "media",
+                "{{MEDIA_ID}}"
+              ]
+            }
+          },
           "response": []
         },
         {
@@ -3980,26 +3790,6 @@
         },
         {
           "name": "PUT Update Media — No Auth (401)",
-          "request": {
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{BASE_URL}}/media/{{MEDIA_ID}}",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "media",
-                "{{MEDIA_ID}}"
-              ]
-            }
-          },
           "event": [
             {
               "listen": "prerequest",
@@ -4023,16 +3813,12 @@
               }
             }
           ],
-          "response": []
-        },
-        {
-          "name": "PUT Update Media — Low Privilege (403)",
           "request": {
             "method": "PUT",
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{MEMBER_TOKEN}}",
+                "value": "",
                 "type": "text"
               }
             ],
@@ -4047,6 +3833,10 @@
               ]
             }
           },
+          "response": []
+        },
+        {
+          "name": "PUT Update Media — Low Privilege (403)",
           "event": [
             {
               "listen": "prerequest",
@@ -4070,6 +3860,26 @@
               }
             }
           ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{MEMBER_TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/media/{{MEDIA_ID}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "media",
+                "{{MEDIA_ID}}"
+              ]
+            }
+          },
           "response": []
         },
         {
@@ -4092,26 +3902,6 @@
         },
         {
           "name": "DEL Delete Media — No Auth (401)",
-          "request": {
-            "method": "DELETE",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{BASE_URL}}/media/{{MEDIA_ID}}",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "media",
-                "{{MEDIA_ID}}"
-              ]
-            }
-          },
           "event": [
             {
               "listen": "prerequest",
@@ -4135,16 +3925,12 @@
               }
             }
           ],
-          "response": []
-        },
-        {
-          "name": "DEL Delete Media — Low Privilege (403)",
           "request": {
             "method": "DELETE",
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{MEMBER_TOKEN}}",
+                "value": "",
                 "type": "text"
               }
             ],
@@ -4159,6 +3945,10 @@
               ]
             }
           },
+          "response": []
+        },
+        {
+          "name": "DEL Delete Media — Low Privilege (403)",
           "event": [
             {
               "listen": "prerequest",
@@ -4182,6 +3972,26 @@
               }
             }
           ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{MEMBER_TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/media/{{MEDIA_ID}}",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "media",
+                "{{MEDIA_ID}}"
+              ]
+            }
+          },
           "response": []
         },
         {
@@ -4205,27 +4015,6 @@
         },
         {
           "name": "POST Upload Media File — No Auth (401)",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{BASE_URL}}/media/{{MEDIA_ID}}/upload",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "media",
-                "{{MEDIA_ID}}",
-                "upload"
-              ]
-            }
-          },
           "event": [
             {
               "listen": "prerequest",
@@ -4249,16 +4038,12 @@
               }
             }
           ],
-          "response": []
-        },
-        {
-          "name": "POST Upload Media File — Low Privilege (403)",
           "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{MEMBER_TOKEN}}",
+                "value": "",
                 "type": "text"
               }
             ],
@@ -4274,6 +4059,10 @@
               ]
             }
           },
+          "response": []
+        },
+        {
+          "name": "POST Upload Media File — Low Privilege (403)",
           "event": [
             {
               "listen": "prerequest",
@@ -4297,6 +4086,259 @@
               }
             }
           ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{MEMBER_TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/media/{{MEDIA_ID}}/upload",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "media",
+                "{{MEDIA_ID}}",
+                "upload"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "REPORTS",
+      "item": [
+        {
+          "name": "GET Attendance Report",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/reports/attendance?from=&to=",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "reports",
+                "attendance"
+              ],
+              "query": [
+                {
+                  "key": "from",
+                  "value": ""
+                },
+                {
+                  "key": "to",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Attendance Report — No Auth (401)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Remove Authorization header for this request",
+                  "pm.request.headers.remove('Authorization');"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Should return 401 Unauthorized when no token provided', function () {",
+                  "  pm.response.to.have.status(401);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/reports/attendance?from=&to=",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "reports",
+                "attendance"
+              ],
+              "query": [
+                {
+                  "key": "from",
+                  "value": ""
+                },
+                {
+                  "key": "to",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Finance Report",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/reports/finance?period=monthly",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "reports",
+                "finance"
+              ],
+              "query": [
+                {
+                  "key": "period",
+                  "value": "monthly"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Finance Report — No Auth (401)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Remove Authorization header for this request",
+                  "pm.request.headers.remove('Authorization');"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Should return 401 Unauthorized when no token provided', function () {",
+                  "  pm.response.to.have.status(401);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/reports/finance?period=monthly",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "reports",
+                "finance"
+              ],
+              "query": [
+                {
+                  "key": "period",
+                  "value": "monthly"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Programs Report",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/reports/programs",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "reports",
+                "programs"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Programs Report — No Auth (401)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Remove Authorization header for this request",
+                  "pm.request.headers.remove('Authorization');"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Should return 401 Unauthorized when no token provided', function () {",
+                  "  pm.response.to.have.status(401);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/reports/programs",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "reports",
+                "programs"
+              ]
+            }
+          },
           "response": []
         }
       ]
@@ -4320,13 +4362,11 @@
               "query": [
                 {
                   "key": "page",
-                  "value": "1",
-                  "disabled": false
+                  "value": "1"
                 },
                 {
                   "key": "limit",
-                  "value": "20",
-                  "disabled": false
+                  "value": "20"
                 }
               ]
             }
@@ -4335,37 +4375,6 @@
         },
         {
           "name": "GET Audit Logs — No Auth (401)",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{BASE_URL}}/audit?page=1&limit=20",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "audit"
-              ],
-              "query": [
-                {
-                  "key": "page",
-                  "value": "1",
-                  "disabled": false
-                },
-                {
-                  "key": "limit",
-                  "value": "20",
-                  "disabled": false
-                }
-              ]
-            }
-          },
           "event": [
             {
               "listen": "prerequest",
@@ -4389,16 +4398,12 @@
               }
             }
           ],
-          "response": []
-        },
-        {
-          "name": "GET Audit Logs — Low Privilege (403)",
           "request": {
             "method": "GET",
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{MEMBER_TOKEN}}",
+                "value": "",
                 "type": "text"
               }
             ],
@@ -4413,17 +4418,19 @@
               "query": [
                 {
                   "key": "page",
-                  "value": "1",
-                  "disabled": false
+                  "value": "1"
                 },
                 {
                   "key": "limit",
-                  "value": "20",
-                  "disabled": false
+                  "value": "20"
                 }
               ]
             }
           },
+          "response": []
+        },
+        {
+          "name": "GET Audit Logs — Low Privilege (403)",
           "event": [
             {
               "listen": "prerequest",
@@ -4447,6 +4454,35 @@
               }
             }
           ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{MEMBER_TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/audit?page=1&limit=20",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "audit"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                }
+              ]
+            }
+          },
           "response": []
         }
       ]
