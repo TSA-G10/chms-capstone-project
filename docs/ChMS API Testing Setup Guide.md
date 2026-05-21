@@ -9,6 +9,8 @@ Before you start, in your terminal, run;
 Add to your .env file:
 ADMIN_EMAIL=superadmin@chms.com
 ADMIN_PASSWORD=Password123!
+JWT_ACCESS_EXPIRES_IN=7d
+JWT_REFRESH_EXPIRES_IN=7d
 
 This will inject the updated files from all teams into your local repo.
 
