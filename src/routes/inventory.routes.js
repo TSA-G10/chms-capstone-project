@@ -7,37 +7,37 @@ const authorizeRoles = require("../middlewares/authorizeRoles");
 router.get(
   "/",
   authenticate,
-  authorizeRoles("admin", "pastor", "staff"),
+  authorizeRoles("super_admin", "admin", "pastor", "staff"),
   inventoryController.getInventory,
 );
 router.post(
   "/",
   authenticate,
-  authorizeRoles("admin"),
+  authorizeRoles("super_admin", "admin"),
   inventoryController.createInventoryItem,
 );
 router.get(
   "/:id",
   authenticate,
-  authorizeRoles("admin", "pastor", "staff"),
+  authorizeRoles("super_admin", "admin", "pastor", "staff"),
   inventoryController.getInventoryItem,
 );
 router.put(
   "/:id",
   authenticate,
-  authorizeRoles("admin"),
+  authorizeRoles("super_admin", "admin"),
   inventoryController.updateInventoryItem,
 );
 router.delete(
   "/:id",
   authenticate,
-  authorizeRoles("admin"),
+  authorizeRoles("super_admin", "admin"),
   inventoryController.deleteInventoryItem,
 );
 router.put(
   "/:id/link-expense",
   authenticate,
-  authorizeRoles("admin", "finance_officer"),
+  authorizeRoles("super_admin", "finance_officer"),
   inventoryController.linkExpense,
 );
 

@@ -9,7 +9,8 @@ const orgUnitSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      enum: ["zone", "area", "district", "region"],
+      lowercase: true,
+      enum: ["department", "zone", "area", "district", "region"],
       required: [true, "Unit type is required"],
     },
     parentId: {

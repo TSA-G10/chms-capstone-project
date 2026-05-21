@@ -9,6 +9,7 @@ const eventSchema = new mongoose.Schema(
     },
     type: {
       type: String,
+      lowercase: true,
       enum: ["service", "ceremony", "special", "fellowship"],
       required: [true, "Event type is required"],
     },

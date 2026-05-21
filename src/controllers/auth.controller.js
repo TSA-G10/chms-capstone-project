@@ -32,8 +32,20 @@ const login = async (req, res) => {
         .status(400)
         .json({ success: false, error: error.details[0].message });
 
-    const tokens = await authService.login(req.body);
-    return res.status(200).json({ success: true, data: tokens });
+    const { accessToken, refreshToken, user } = await authService.login(
+      req.body,
+    );
+
+    return res.status(200).json({
+      success: true,
+      accessToken,
+      refreshToken,
+      user: {
+        id: user._id,
+        email: user.email,
+        role: user.role,
+      },
+    });
   } catch (err) {
     return res.status(401).json({ success: false, error: err.message });
   }

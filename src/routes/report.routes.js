@@ -7,21 +7,21 @@ const authorizeRoles = require("../middlewares/authorizeRoles");
 router.get(
   "/attendance",
   authenticate,
-  authorizeRoles("admin", "finance_officer", "pastor"),
+  authorizeRoles("super_admin", "admin", "finance_officer", "pastor"),
   reportController.getAttendanceReport,
 );
 
 router.get(
   "/finance",
   authenticate,
-  authorizeRoles("admin", "finance_officer"),
+  authorizeRoles("super_admin", "admin", "finance_officer"),
   reportController.getFinanceReport,
 );
 
 router.get(
   "/programs",
   authenticate,
-  authorizeRoles("admin", "pastor"),
+  authorizeRoles("super_admin", "admin", "pastor"),
   reportController.getProgramsReport,
 );
 

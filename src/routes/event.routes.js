@@ -14,7 +14,7 @@ router.get(
 router.post(
   "/",
   authenticate,
-  authorizeRoles("admin", "pastor"),
+  authorizeRoles("super_admin", "admin", "pastor"),
   eventController.createEvent,
 );
 router.get(
@@ -25,13 +25,13 @@ router.get(
 router.put(
   "/:id",
   authenticate,
-  authorizeRoles("admin", "pastor"),
+  authorizeRoles("super_admin", "admin", "pastor"),
   eventController.updateEvent,
 );
 router.delete(
   "/:id",
   authenticate,
-  authorizeRoles("admin"),
+  authorizeRoles("super_admin", "admin"),
   eventController.deleteEvent,
 );
 
@@ -39,13 +39,13 @@ router.delete(
 router.post(
   "/:id/attendance",
   authenticate,
-  authorizeRoles("staff", "admin", "pastor"),
+  authorizeRoles("super_admin", "staff", "admin", "pastor"),
   attendanceController.recordAttendance,
 );
 router.get(
   "/:id/attendance",
   authenticate,
-  authorizeRoles("admin", "pastor", "staff"),
+  authorizeRoles("super_admin", "admin", "pastor", "staff"),
   attendanceController.getEventAttendance,
 );
 

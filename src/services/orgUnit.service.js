@@ -1,5 +1,5 @@
 const OrganizationalUnit = require("../models/OrganizationalUnit");
-const User = require("../models/User");
+const Member = require("../models/Member");
 
 const getAllOrgUnits = async ({ page = 1, limit = 20, type }) => {
   const filter = { isActive: true };
@@ -56,7 +56,10 @@ const deleteOrgUnit = async (id) => {
 };
 
 const assignLeader = async (id, leaderId) => {
-  const leader = await User.findOne({ _id: leaderId, isActive: true });
+  const leader = await Member.findOne({
+    _id: leaderId,
+    memberStatus: "active",
+  });
   if (!leader) throw new Error("Leader not found or inactive.");
 
   const unit = await OrganizationalUnit.findOneAndUpdate(
@@ -64,6 +67,7 @@ const assignLeader = async (id, leaderId) => {
     { leaderId },
     { new: true },
   ).populate("leaderId", "firstName lastName role");
+
   if (!unit) throw new Error("Organizational unit not found.");
   return unit;
 };

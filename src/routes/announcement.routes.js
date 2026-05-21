@@ -8,20 +8,20 @@ router.get("/", authenticate, announcementController.getAnnouncements);
 router.post(
   "/",
   authenticate,
-  authorizeRoles("admin", "pastor"),
+  authorizeRoles("super_admin", "admin", "pastor"),
   announcementController.createAnnouncement,
 );
 router.get("/:id", authenticate, announcementController.getAnnouncement);
 router.put(
   "/:id",
   authenticate,
-  authorizeRoles("admin", "pastor"),
+  authorizeRoles("super_admin", "admin", "pastor"),
   announcementController.updateAnnouncement,
 );
 router.delete(
   "/:id",
   authenticate,
-  authorizeRoles("admin"),
+  authorizeRoles("super_admin", "admin"),
   announcementController.deleteAnnouncement,
 );
 

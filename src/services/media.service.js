@@ -38,7 +38,7 @@ const deleteMedia = async (id) => {
   // If a file is attached to this resource, remove it from Cloudinary
   if (media.public_id) {
     await cloudinary.uploader.destroy(media.public_id, {
-      resource_type: "auto",
+      resource_type: "image",
     });
   }
 
@@ -51,7 +51,7 @@ const uploadMediaFile = async (id, file) => {
   if (!media) throw new Error("Media resource not found.");
 
   // Determine Cloudinary resource type by mimetype
-  const resourceType = file.mimetype.startsWith("audio") ? "video" : "auto";
+  const resourceType = file.mimetype.startsWith("audio") ? "video" : "image";
   // Note: Cloudinary uses 'video' resource_type for audio files
 
   const uploadToCloud = require("../utils/uploadToCloud");

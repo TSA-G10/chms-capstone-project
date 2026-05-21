@@ -19,6 +19,7 @@ const fellowshipSchema = new mongoose.Schema(
     },
     meetingDay: {
       type: String,
+      lowercase: true,
       enum: [
         "monday",
         "tuesday",

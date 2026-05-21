@@ -10,13 +10,13 @@ const upload = require("../middlewares/upload");
 router.post(
   "/contributions",
   authenticate,
-  authorizeRoles("finance_officer", "admin"),
+  authorizeRoles("super_admin", "finance_officer", "admin"),
   contributionController.createContribution,
 );
 router.get(
   "/contributions",
   authenticate,
-  authorizeRoles("finance_officer", "admin"),
+  authorizeRoles("super_admin", "finance_officer", "admin"),
   contributionController.getContributions,
 );
 
@@ -24,14 +24,14 @@ router.get(
 router.post(
   "/expenses",
   authenticate,
-  authorizeRoles("finance_officer", "admin"),
+  authorizeRoles("super_admin", "finance_officer", "admin"),
   upload.single("receipt"),
   expenseController.createExpense,
 );
 router.get(
   "/expenses",
   authenticate,
-  authorizeRoles("finance_officer", "admin"),
+  authorizeRoles("super_admin", "finance_officer", "admin"),
   expenseController.getExpenses,
 );
 
@@ -39,7 +39,7 @@ router.get(
 router.get(
   "/summary",
   authenticate,
-  authorizeRoles("admin"),
+  authorizeRoles("super_admin", "admin"),
   contributionController.getFinanceSummary,
 );
 

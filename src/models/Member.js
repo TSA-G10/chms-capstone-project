@@ -26,10 +26,15 @@ const memberSchema = new mongoose.Schema(
     },
     dateOfBirth: { type: Date },
     address: { type: String, trim: true },
+    maritalStatus: {
+      type: String,
+      enum: ["single", "married", "divorced", "widowed"],
+      trim: true,
+    },
     memberStatus: {
       type: String,
       enum: ["active", "inactive", "visitor", "transferred"],
-      default: "visitor",
+      default: "active",
     },
     fellowshipId: {
       type: mongoose.Schema.Types.ObjectId,
