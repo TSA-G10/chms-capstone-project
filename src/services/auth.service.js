@@ -48,7 +48,7 @@ const login = async ({ email, password }) => {
   user.lastLogin = new Date();
   await user.save();
 
-  return { accessToken, refreshToken };
+  return { accessToken, refreshToken, user };
 };
 
 const refresh = ({ refreshToken }) => {

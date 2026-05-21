@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const inventoryController = require("../controllers/inventory.controller");
+const orgUnitController = require("../controllers/orgUnit.controller");
 const authenticate = require("../middlewares/authenticate");
 const authorizeRoles = require("../middlewares/authorizeRoles");
 
@@ -8,37 +8,37 @@ router.get(
   "/",
   authenticate,
   authorizeRoles("super_admin", "admin", "pastor", "staff"),
-  inventoryController.getInventory,
+  orgUnitController.getOrgUnits,
 );
 router.post(
   "/",
   authenticate,
   authorizeRoles("super_admin", "admin"),
-  inventoryController.createInventoryItem,
+  orgUnitController.createOrgUnit,
 );
 router.get(
   "/:id",
   authenticate,
   authorizeRoles("super_admin", "admin", "pastor", "staff"),
-  inventoryController.getInventoryItem,
+  orgUnitController.getOrgUnit,
 );
 router.put(
   "/:id",
   authenticate,
   authorizeRoles("super_admin", "admin"),
-  inventoryController.updateInventoryItem,
+  orgUnitController.updateOrgUnit,
 );
 router.delete(
   "/:id",
   authenticate,
   authorizeRoles("super_admin", "admin"),
-  inventoryController.deleteInventoryItem,
+  orgUnitController.deleteOrgUnit,
 );
-router.put(
-  "/:id/link-expense",
+router.post(
+  "/:id/assign-leader",
   authenticate,
-  authorizeRoles("super_admin", "finance_officer"),
-  inventoryController.linkExpense,
+  authorizeRoles("super_admin", "admin"),
+  orgUnitController.assignLeader,
 );
 
 module.exports = router;

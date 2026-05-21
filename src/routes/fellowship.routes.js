@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const inventoryController = require("../controllers/inventory.controller");
+const fellowshipController = require("../controllers/fellowship.controller");
 const authenticate = require("../middlewares/authenticate");
 const authorizeRoles = require("../middlewares/authorizeRoles");
 
@@ -8,37 +8,37 @@ router.get(
   "/",
   authenticate,
   authorizeRoles("super_admin", "admin", "pastor", "staff"),
-  inventoryController.getInventory,
+  fellowshipController.getFellowships,
 );
 router.post(
   "/",
   authenticate,
-  authorizeRoles("super_admin", "admin"),
-  inventoryController.createInventoryItem,
+  authorizeRoles("super_admin", "admin", "pastor"),
+  fellowshipController.createFellowship,
 );
 router.get(
   "/:id",
   authenticate,
   authorizeRoles("super_admin", "admin", "pastor", "staff"),
-  inventoryController.getInventoryItem,
+  fellowshipController.getFellowship,
 );
 router.put(
   "/:id",
   authenticate,
-  authorizeRoles("super_admin", "admin"),
-  inventoryController.updateInventoryItem,
+  authorizeRoles("super_admin", "admin", "pastor"),
+  fellowshipController.updateFellowship,
 );
 router.delete(
   "/:id",
   authenticate,
   authorizeRoles("super_admin", "admin"),
-  inventoryController.deleteInventoryItem,
+  fellowshipController.deleteFellowship,
 );
-router.put(
-  "/:id/link-expense",
+router.get(
+  "/:id/members",
   authenticate,
-  authorizeRoles("super_admin", "finance_officer"),
-  inventoryController.linkExpense,
+  authorizeRoles("super_admin", "admin", "pastor", "staff"),
+  fellowshipController.getFellowshipMembers,
 );
 
 module.exports = router;

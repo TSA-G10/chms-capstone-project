@@ -1,52 +1,50 @@
 const express = require("express");
 const router = express.Router();
-const eventController = require("../controllers/event.controller");
-const attendanceController = require("../controllers/attendance.controller");
+const missionController = require("../controllers/mission.controller");
 const authenticate = require("../middlewares/authenticate");
 const authorizeRoles = require("../middlewares/authorizeRoles");
 
-// Events CRUD
 router.get(
   "/",
   authenticate,
-  eventController.getEvents, // all authenticated users
+  authorizeRoles("super_admin", "admin", "pastor", "staff"),
+  missionController.getMissions,
 );
 router.post(
   "/",
   authenticate,
   authorizeRoles("super_admin", "admin", "pastor"),
-  eventController.createEvent,
+  missionController.createMission,
 );
 router.get(
   "/:id",
   authenticate,
-  eventController.getEvent, // all authenticated users
+  authorizeRoles("super_admin", "admin", "pastor", "staff"),
+  missionController.getMission,
 );
 router.put(
   "/:id",
   authenticate,
   authorizeRoles("super_admin", "admin", "pastor"),
-  eventController.updateEvent,
+  missionController.updateMission,
 );
 router.delete(
   "/:id",
   authenticate,
   authorizeRoles("super_admin", "admin"),
-  eventController.deleteEvent,
+  missionController.deleteMission,
 );
-
-// Attendance
 router.post(
-  "/:id/attendance",
+  "/:id/volunteers",
   authenticate,
-  authorizeRoles("super_admin", "staff", "admin", "pastor"),
-  attendanceController.recordAttendance,
+  authorizeRoles("super_admin", "admin", "pastor"),
+  missionController.addVolunteer,
 );
 router.get(
-  "/:id/attendance",
+  "/:id/volunteers",
   authenticate,
   authorizeRoles("super_admin", "admin", "pastor", "staff"),
-  attendanceController.getEventAttendance,
+  missionController.getVolunteers,
 );
 
 module.exports = router;
