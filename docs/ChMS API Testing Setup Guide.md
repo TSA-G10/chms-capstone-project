@@ -6,6 +6,10 @@ Before you start, in your terminal, run;
 `git checkout develop`
 `git pull origin develop`
 
+Add to your .env file:
+ADMIN_EMAIL=superadmin@chms.com
+ADMIN_PASSWORD=Password123!
+
 This will inject the updated files from all teams into your local repo.
 
 ## 1. Import the Postman Collection and Environment together
