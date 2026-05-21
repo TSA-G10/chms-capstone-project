@@ -8,14 +8,14 @@ const upload = require("../middlewares/upload");
 router.get(
   "/",
   authenticate,
-  authorizeRoles("admin", "pastor", "staff"),
+  authorizeRoles("super_admin", "admin", "pastor", "staff"),
   memberController.getMembers,
 );
 
 router.post(
   "/",
   authenticate,
-  authorizeRoles("admin", "pastor"),
+  authorizeRoles("super_admin", "admin", "pastor"),
   upload.single("profileImage"),
   memberController.createMember,
 );
@@ -23,28 +23,28 @@ router.post(
 router.get(
   "/:id",
   authenticate,
-  authorizeRoles("admin", "pastor", "staff"),
+  authorizeRoles("super_admin", "admin", "pastor", "staff"),
   memberController.getMember,
 );
 
 router.put(
   "/:id",
   authenticate,
-  authorizeRoles("admin", "pastor"),
+  authorizeRoles("super_admin", "admin", "pastor"),
   memberController.updateMember,
 );
 
 router.delete(
   "/:id",
   authenticate,
-  authorizeRoles("admin"),
+  authorizeRoles("super_admin"),
   memberController.deleteMember,
 );
 
 router.get(
   "/:id/attendance",
   authenticate,
-  authorizeRoles("admin", "pastor", "staff"),
+  authorizeRoles("super_admin", "admin", "pastor", "staff"),
   memberController.getMemberAttendance,
 );
 

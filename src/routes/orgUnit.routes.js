@@ -7,37 +7,37 @@ const authorizeRoles = require("../middlewares/authorizeRoles");
 router.get(
   "/",
   authenticate,
-  authorizeRoles("admin", "pastor", "staff"),
+  authorizeRoles("super_admin", "admin", "pastor", "staff"),
   orgUnitController.getOrgUnits,
 );
 router.post(
   "/",
   authenticate,
-  authorizeRoles("admin"),
+  authorizeRoles("super_admin", "admin"),
   orgUnitController.createOrgUnit,
 );
 router.get(
   "/:id",
   authenticate,
-  authorizeRoles("admin", "pastor", "staff"),
+  authorizeRoles("super_admin", "admin", "pastor", "staff"),
   orgUnitController.getOrgUnit,
 );
 router.put(
   "/:id",
   authenticate,
-  authorizeRoles("admin"),
+  authorizeRoles("super_admin", "admin"),
   orgUnitController.updateOrgUnit,
 );
 router.delete(
   "/:id",
   authenticate,
-  authorizeRoles("admin"),
+  authorizeRoles("super_admin", "admin"),
   orgUnitController.deleteOrgUnit,
 );
 router.post(
   "/:id/assign-leader",
   authenticate,
-  authorizeRoles("admin"),
+  authorizeRoles("super_admin", "admin"),
   orgUnitController.assignLeader,
 );
 

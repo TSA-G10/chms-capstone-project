@@ -10,6 +10,7 @@ router.post(
   "/",
   authenticate,
   authorizeRoles(
+    "super_admin",
     "admin",
     "pastor",
     "finance_officer",
@@ -24,6 +25,7 @@ router.get(
   "/",
   authenticate,
   authorizeRoles(
+    "super_admin",
     "admin",
     "pastor",
     "finance_officer",
@@ -37,11 +39,13 @@ router.get(
   "/:id",
   authenticate,
   authorizeRoles(
+    "super_admin",
     "admin",
     "pastor",
     "finance_officer",
     "welfare_officer",
     "staff",
+    "member",
   ),
   documentController.getDocumentById,
 );
@@ -49,7 +53,7 @@ router.get(
 router.delete(
   "/:id",
   authenticate,
-  authorizeRoles("admin"),
+  authorizeRoles("super_admin", "admin"),
   documentController.deleteDocument,
 );
 

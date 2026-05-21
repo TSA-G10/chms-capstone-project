@@ -8,6 +8,9 @@ const createMemberSchema = Joi.object({
   gender: Joi.string().valid("male", "female", "other").optional(),
   dateOfBirth: Joi.date().optional(),
   address: Joi.string().optional(),
+  maritalStatus: Joi.string()
+    .valid("single", "married", "divorced", "widowed")
+    .optional(),
   memberStatus: Joi.string()
     .valid("active", "inactive", "visitor", "transferred")
     .optional(),
@@ -21,5 +24,3 @@ const updateMemberSchema = createMemberSchema.fork(
 );
 
 module.exports = { createMemberSchema, updateMemberSchema };
-
-

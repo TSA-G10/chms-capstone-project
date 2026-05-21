@@ -10,20 +10,20 @@ router.get("/", authenticate, programController.getPrograms);
 router.post(
   "/",
   authenticate,
-  authorizeRoles("admin", "pastor"),
+  authorizeRoles("super_admin", "admin", "pastor"),
   programController.createProgram,
 );
 router.get("/:id", authenticate, programController.getProgram);
 router.put(
   "/:id",
   authenticate,
-  authorizeRoles("admin", "pastor"),
+  authorizeRoles("super_admin", "admin", "pastor"),
   programController.updateProgram,
 );
 router.delete(
   "/:id",
   authenticate,
-  authorizeRoles("admin"),
+  authorizeRoles("super_admin", "admin"),
   programController.deleteProgram,
 );
 
@@ -31,7 +31,7 @@ router.delete(
 router.post(
   "/:id/sessions",
   authenticate,
-  authorizeRoles("admin", "pastor"),
+  authorizeRoles("super_admin", "admin", "pastor"),
   programController.addSession,
 );
 
@@ -39,13 +39,13 @@ router.post(
 router.post(
   "/:id/enroll",
   authenticate,
-  authorizeRoles("admin", "pastor", "staff"),
+  authorizeRoles("super_admin", "admin", "pastor", "staff"),
   enrollmentController.enrollMember,
 );
 router.get(
   "/:id/participants",
   authenticate,
-  authorizeRoles("admin", "pastor", "staff"),
+  authorizeRoles("super_admin", "admin", "pastor", "staff"),
   enrollmentController.getParticipants,
 );
 

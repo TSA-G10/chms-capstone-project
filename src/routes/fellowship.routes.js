@@ -7,37 +7,37 @@ const authorizeRoles = require("../middlewares/authorizeRoles");
 router.get(
   "/",
   authenticate,
-  authorizeRoles("admin", "pastor", "staff"),
+  authorizeRoles("super_admin", "admin", "pastor", "staff"),
   fellowshipController.getFellowships,
 );
 router.post(
   "/",
   authenticate,
-  authorizeRoles("admin", "pastor"),
+  authorizeRoles("super_admin", "admin", "pastor"),
   fellowshipController.createFellowship,
 );
 router.get(
   "/:id",
   authenticate,
-  authorizeRoles("admin", "pastor", "staff"),
+  authorizeRoles("super_admin", "admin", "pastor", "staff"),
   fellowshipController.getFellowship,
 );
 router.put(
   "/:id",
   authenticate,
-  authorizeRoles("admin", "pastor"),
+  authorizeRoles("super_admin", "admin", "pastor"),
   fellowshipController.updateFellowship,
 );
 router.delete(
   "/:id",
   authenticate,
-  authorizeRoles("admin"),
+  authorizeRoles("super_admin", "admin"),
   fellowshipController.deleteFellowship,
 );
 router.get(
   "/:id/members",
   authenticate,
-  authorizeRoles("admin", "pastor", "staff"),
+  authorizeRoles("super_admin", "admin", "pastor", "staff"),
   fellowshipController.getFellowshipMembers,
 );
 

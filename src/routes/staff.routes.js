@@ -7,31 +7,31 @@ const authorizeRoles = require("../middlewares/authorizeRoles");
 router.get(
   "/",
   authenticate,
-  authorizeRoles("admin", "pastor", "staff"),
+  authorizeRoles("super_admin", "admin", "pastor", "staff"),
   staffController.getStaff,
 );
 router.post(
   "/",
   authenticate,
-  authorizeRoles("admin"),
+  authorizeRoles("super_admin", "admin"),
   staffController.createStaff,
 );
 router.get(
   "/:id",
   authenticate,
-  authorizeRoles("admin", "pastor", "staff"),
+  authorizeRoles("super_admin", "admin", "pastor", "staff"),
   staffController.getStaffById,
 );
 router.put(
   "/:id",
   authenticate,
-  authorizeRoles("admin"),
+  authorizeRoles("super_admin", "admin"),
   staffController.updateStaff,
 );
 router.delete(
   "/:id",
   authenticate,
-  authorizeRoles("admin"),
+  authorizeRoles("super_admin", "admin"),
   staffController.deleteStaff,
 );
 

@@ -19,6 +19,7 @@ const getOrgUnit = async (req, res) => {
 };
 
 const createOrgUnit = async (req, res) => {
+  console.log("Creating org unit with data:", req.body);
   try {
     const unit = await orgUnitService.createOrgUnit(req.body);
     return res.status(201).json({ success: true, data: unit });

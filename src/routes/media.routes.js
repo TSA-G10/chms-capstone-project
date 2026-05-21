@@ -9,27 +9,27 @@ router.get("/", authenticate, mediaController.getAllMedia);
 router.post(
   "/",
   authenticate,
-  authorizeRoles("admin", "pastor"),
+  authorizeRoles("super_admin", "admin", "pastor"),
   mediaController.createMedia,
 );
 router.get("/:id", authenticate, mediaController.getMedia);
 router.put(
   "/:id",
   authenticate,
-  authorizeRoles("admin", "pastor"),
+  authorizeRoles("super_admin", "admin", "pastor"),
   mediaController.updateMedia,
 );
 router.delete(
   "/:id",
   authenticate,
-  authorizeRoles("admin"),
+  authorizeRoles("super_admin", "admin"),
   mediaController.deleteMedia,
 );
 
 router.post(
   "/:id/upload",
   authenticate,
-  authorizeRoles("admin", "pastor"),
+  authorizeRoles("super_admin", "admin", "pastor"),
   mediaUpload.single("file"),
   mediaController.uploadMediaFile,
 );

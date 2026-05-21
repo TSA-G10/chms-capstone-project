@@ -7,43 +7,43 @@ const authorizeRoles = require("../middlewares/authorizeRoles");
 router.get(
   "/",
   authenticate,
-  authorizeRoles("admin", "pastor", "welfare_officer"),
+  authorizeRoles("super_admin", "admin", "pastor", "welfare_officer"),
   welfareController.getWelfareCases,
 );
 router.post(
   "/",
   authenticate,
-  authorizeRoles("admin", "welfare_officer"),
+  authorizeRoles("super_admin", "admin", "welfare_officer"),
   welfareController.createWelfareCase,
 );
 router.get(
   "/:id",
   authenticate,
-  authorizeRoles("admin", "pastor", "welfare_officer"),
+  authorizeRoles("super_admin", "admin", "pastor", "welfare_officer"),
   welfareController.getWelfareCase,
 );
 router.put(
   "/:id",
   authenticate,
-  authorizeRoles("admin", "welfare_officer"),
+  authorizeRoles("super_admin", "admin", "welfare_officer"),
   welfareController.updateWelfareCase,
 );
 router.delete(
   "/:id",
   authenticate,
-  authorizeRoles("admin"),
+  authorizeRoles("super_admin", "admin"),
   welfareController.deleteWelfareCase,
 );
 router.post(
   "/:id/support-log",
   authenticate,
-  authorizeRoles("admin", "welfare_officer"),
+  authorizeRoles("super_admin", "admin", "welfare_officer"),
   welfareController.addSupportLog,
 );
 router.get(
   "/:id/support-log",
   authenticate,
-  authorizeRoles("admin", "pastor", "welfare_officer"),
+  authorizeRoles("super_admin", "admin", "pastor", "welfare_officer"),
   welfareController.getSupportLog,
 );
 
