@@ -17,8 +17,8 @@
 ## Correct Execution Order (First Full Run) - DO THIS FIRST
 
 1. `POST Login` (super admin) — sets `ACCESS_TOKEN`, `REFRESH_TOKEN`, `STAFF_ID` (saves your flat `json.user.id`)
-2. `POST Register` (member@chms.com)
-3. `POST Login` (member@chms.com) — sets `MEMBER_TOKEN` via your flat-update script, then restore super admin script & log back in
+2. `POST Register` (staff@chms.com)
+3. `POST Login` (staff@chms.com) — sets `MEMBER_TOKEN` via your flat-update script, then restore super admin script & log back in
 4. `POST Create Fellowship` — sets `FELLOWSHIP_ID`
 5. `POST Create Member` — sets `MEMBER_ID`
 6. `POST Create Org Unit` — sets `ORG_UNIT_ID`

@@ -18,12 +18,12 @@ app.get("/health", (req, res) => {
 });
 
 // ─── Swagger Routes ────────────────────────────────────────────────────────────
-const swaggerUi = require('swagger-ui-express');
-const swaggerSpec = require('./swagger');
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpec = require("./swagger");
 
-app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-app.get('/api/docs.json', (req, res) => {
-  res.setHeader('Content-Type', 'application/json');
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.get("/api-docs.json", (req, res) => {
+  res.setHeader("Content-Type", "application/json");
   res.send(swaggerSpec);
 });
 
@@ -81,6 +81,5 @@ app.use((err, req, res, next) => {
       : err.message;
   res.status(statusCode).json({ success: false, error: message });
 });
-
 
 module.exports = app;
