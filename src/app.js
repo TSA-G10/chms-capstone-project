@@ -17,6 +17,16 @@ app.get("/health", (req, res) => {
   res.status(200).json({ success: true, message: "ChMS API is running." });
 });
 
+// ─── Swagger Routes ────────────────────────────────────────────────────────────
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpec = require("./swagger");
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.get("/api-docs.json", (req, res) => {
+  res.setHeader("Content-Type", "application/json");
+  res.send(swaggerSpec);
+});
+
 // ─── API Routes ──────────────────────────────────────────────────────────────
 const authRoutes = require("./routes/auth.routes");
 const memberRoutes = require("./routes/member.routes");
@@ -71,6 +81,5 @@ app.use((err, req, res, next) => {
       : err.message;
   res.status(statusCode).json({ success: false, error: message });
 });
-
 
 module.exports = app;

@@ -887,9 +887,9 @@ git branch -d feature/qa-postman-phase3
 
 **Phase 3 Exit Criteria:**
 
-- [ ] All Phase 3 endpoints tested — pass/fail noted per endpoint
-- [ ] Auth guards verified on all new routes — 401 and 403 cases confirmed
-- [ ] Phase 3 test report shared with all team leads listing any failures
+- [x] All Phase 3 endpoints tested — pass/fail noted per endpoint
+- [x] Auth guards verified on all new routes — 401 and 403 cases confirmed
+- [x] Phase 3 test report shared with all team leads listing any failures
 
 **Phase 3 test report format:**
 
@@ -921,8 +921,8 @@ git checkout develop
 git pull origin develop
 
 # Run full Postman collection via Newman
-newman run postman/ChMS_API_v1.postman_collection.json \
-  --environment postman/dev.postman_environment.json \
+newman run postman/ChMS API v1.postman_collection.json \
+  --environment postman/ChMS Local.postman_environment.json \
   --reporters cli,json \
   --reporter-json-export postman/regression-report-final.json
 
