@@ -167,7 +167,6 @@ cp .env.example .env
 # Open .env and fill in your real values:
 # MONGO_URI, JWT secrets, Cloudinary credentials
 ```
-
 Verify the server starts:
 
 ```bash
